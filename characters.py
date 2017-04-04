@@ -11,17 +11,17 @@ class Ability():
 		self.intelligence=intelligence
 		self.will=will
 		self.luck=luck
-	def change_ability_strength(self,value):
+	def change_strength(self,value):
 		self.strength+=value
-	def change_ability_agility(self,value):
+	def change_agility(self,value):
 		self.agility+=value
-	def change_ability_endurance(self,value):
+	def change_endurance(self,value):
 		self.endurance+=value
-	def change_ability_intelligence(self,value):
+	def change_intelligence(self,value):
 		self.intelligence+=value
-	def change_ability_will(self,value):
+	def change_will(self,value):
 		self.will+=value
-	def change_ability_luck(self,value):
+	def change_luck(self,value):
 		self.luck+=value
 	
 
@@ -42,19 +42,14 @@ class Character(Ability):
 	def show_abilities(self):
 		return [self.strength,self.agility,self.endurance,
 				self.intelligence,self.will,self.luck]
-
 	def lose_lp(self,nbr):
-		new_nbr_of_life_points=self.life_points-nbr
-		self.life_points=new_nbr_of_life_points
+		self.life_points-=nbr
 	def gain_lp(self,nbr):
-		new_nbr_of_life_points=self.life_points+nbr
-		self.life_points=new_nbr_of_life_points
+		self.life_points+=nbr
 	def lose_mana(self,nbr):
-		new_nbr_of_mana_points=self.mana_points-nbr
-		self.mana_points=new_nbr_of_mana_points
+		self.mana_points-=nbr
 	def gain_mana(self,nbr):
-		new_nbr_of_mana_points=self.mana_points+nbr
-		self.mana_points=new_nbr_of_mana_points
+		self.mana_points+=nbr
 	def gain_exp(self,value):
 		self.experience+=value
 	def level_up(self, nbr=1):
