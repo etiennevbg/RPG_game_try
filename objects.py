@@ -3,14 +3,16 @@ import characters
 import random
 
 class Object():
-	def __init__(self, weight):
+	def __init__(self,name, weight):
+		self.name=name
 		self.weight=weight
-
+	def __repr__(self):
+		return self.name
 
 class Weapon(Object):
-	def __init__(self,weight,distance,damage_range,
+	def __init__(self,name,weight,distance,damage_range,
 				strength_min=0,agility_min=0,intelligence_min=0):
-		Object.__init__(self,weight)
+		Object.__init__(self,name,weight)
 		self.range=distance
 		self.damage_range=damage_range
 		self.strength_min=strength_min
@@ -22,8 +24,8 @@ class Weapon(Object):
 
 
 class Potion(Object):
-	def __init__(self, weight, life_points_gained,mana_points_gained):
-		Object.__init__(self,weight)
+	def __init__(self,name, weight, life_points_gained,mana_points_gained):
+		Object.__init__(self,name,weight)
 		self.life_points_gained = life_points_gained
 		self.mana_points_gained=mana_points_gained
 	def use(self,character):
@@ -33,4 +35,5 @@ class Potion(Object):
 			character.life_points=character.max_life_points
 		if character.mana_points >character.max_mana_points:
 			character.mana_points=character.max_mana_points
+
 

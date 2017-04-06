@@ -24,8 +24,29 @@ class Ability():
 	def change_luck(self,value):
 		self.luck+=value
 	
+class Equipment():
+	def __init__(self,weight_max=50):
+		self.head_equipment=None
+		self.arm_equipment=None
+		self.torso_equipment=None
+		self.leg_equipment=None
+		self.foot_equipment=None
+		self.weapon=None
+		self.left_hand=None
+		self.weight_max=weight_max
+		self.weight=0
+		self.inventory=[]
+	def add_in_inventory(self,Object):
+		new_weight=self.weight+Object.weight
+		if new_weight>self.weight_max:
+			return 'impossible'
+		else:
+			self.weight=new_weight
+			self.inventory.append(Object)
+	def show_inventory(self):
+		return(self.inventory)
 
-class Character(Ability):
+class Character(Ability,Equipment):
 	def __init__ (self,life_points,max_life_points,mana_points,max_mana_points,
 					experience,level,style):
 		self.life_points=life_points
@@ -37,6 +58,7 @@ class Character(Ability):
 		self.work=None
 		self.style=style
 		Ability.__init__(self)
+		Equipment.__init__(self)
 
 	def show_caracs(self):
 		return [self.life_points,self.mana_points,
