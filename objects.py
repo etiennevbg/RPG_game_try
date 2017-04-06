@@ -77,4 +77,8 @@ class Armour(Object):
 				character.foot_equipment=self
 				if old_armour!=None:
 					character.add_in_inventory(old_armour)
+
+			character.body_protection=character.body_protection+self.protection
+			if old_armour!=None:
+				character.body_protection-=old_armour.protection
 			character.drop(self)

@@ -60,6 +60,7 @@ class Character(Ability,Equipment):
 		self.max_mana_points=max_mana_points
 		self.level=level
 		self.experience=experience
+		self.body_protection=0
 		self.work=None
 		self.style=style
 		Ability.__init__(self)
