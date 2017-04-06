@@ -19,9 +19,12 @@ class Weapon(Object):
 		self.strength_min=strength_min
 		self.agility_min=agility_min
 		self.intelligence_min=intelligence_min
-	def attack(self,foe):
-		damages=random.randint(self.damage_range[0],self.damage_range[1])
-		foe.lose_lp(damages)
+	def equip_weapon(self,character):
+		old_weapon=character.weapon
+		if old_weapon!=None:
+			character.inventory.append(old_weapon)
+		character.weapon=self
+		character.drop(self)
 
 
 class Potion(Object):
@@ -77,7 +80,6 @@ class Armour(Object):
 				character.foot_equipment=self
 				if old_armour!=None:
 					character.add_in_inventory(old_armour)
-
 			character.body_protection=character.body_protection+self.protection
 			if old_armour!=None:
 				character.body_protection-=old_armour.protection
