@@ -84,3 +84,71 @@ class Armour(Object):
 			if old_armour!=None:
 				character.body_protection-=old_armour.protection
 			character.drop(self)
+
+class Food(Potion):
+	def __init__(self,name,weight,life_points_gained,side_effect):
+		Potion.__init__(self,name,weight,life_points_gained,0)
+		self.side_effect=side_effect
+		self.duration_of_effect=-1
+	def eat(self,character):
+		self.use(character)
+		if self.side_effect==None:
+			return None
+		else:
+			effect=self.side_effect.split()
+			#  the type of side_effect will be a string written
+			#  this way : "gain 1 strength for 5 rounds" or
+			#  "lose 30 max_life_points for 2 rounds"
+			self.duration_of_effect=int(effect[4])
+			value=int(effect[1])
+			if effect[0]=='lose':
+				value=value*(-1)
+			if effect[2]=='strength':
+				character.change_strength(value)
+			if effect[2]=='agility':
+				character.change_agility(value)
+			if effect[2]=='endurance':
+				character.change_endurance(value)
+			if effect[2]=='intelligence':
+				character.change_intelligence(value)
+			if effect[2]=='will':
+				character.change_will(value)
+			if effect[2]=='luck':
+				character.change_luck(value)
+			if effect[2]=='max_life_points':
+				character.max_life_points+=value
+				character.life_points+=value
+			if effect[2]=='max_mana_points':
+				character.max_mana_points+=value
+				character.mana_points+=value
+	def end_effect(self,character):
+		self.duration_of_effect-=1
+		if self.duration_of_effect>0:
+			return False
+		elif self.duration_of_effect==0:
+			effect=self.side_effect.split()
+			value=-int(effect[1])
+			if effect[0]=='lose':
+				value=value*(-1)
+			if effect[2]=='strength':
+				character.change_strength(value)
+			if effect[2]=='agility':
+				character.change_agility(value)
+			if effect[2]=='endurance':
+				character.change_endurance(value)
+			if effect[2]=='intelligence':
+				character.change_intelligence(value)
+			if effect[2]=='will':
+				character.change_will(value)
+			if effect[2]=='luck':
+				character.change_luck(value)
+			if effect[2]=='max_life_points':
+				character.max_life_points+=value
+				character.life_points+=value
+			if effect[2]=='max_mana_points':
+				character.max_mana_points+=value
+				character.mana_points+=value
+			return True
+		else:
+			return True
+			
