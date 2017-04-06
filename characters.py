@@ -26,15 +26,17 @@ class Ability():
 	
 
 class Character(Ability):
-	def __init__ (self,life_points,mana_points,experience,
-					level,work,style):
+	def __init__ (self,life_points,max_life_points,mana_points,max_mana_points,
+					experience,level,work,style):
 		self.life_points=life_points
+		self.max_life_points=max_life_points
 		self.mana_points=mana_points
+		self.max_mana_points=max_mana_points
 		self.level=level
 		self.experience=experience
 		self.work=work
 		self.style=style
-		Ability.__init__(self,0,0,0,0,0,0)
+		Ability.__init__(self)
 
 	def show_caracs(self):
 		return [self.life_points,self.mana_points,
@@ -55,3 +57,8 @@ class Character(Ability):
 	def level_up(self, nbr=1):
 		self.level+=nbr
 	
+class Foe(Character):
+	def __init__(self,life_points,max_life_points,mana_points,max_mana_points,
+					level,style):
+		Character.__init__(self,life_points,max_life_points,mana_points,
+							max_mana_points,0,level,None,style)
