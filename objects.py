@@ -20,3 +20,17 @@ class Weapon(Object):
 		damages=random.randint(self.damage_range[0],self.damage_range[1])
 		foe.lose_lp(damages)
 
+
+class Potion(Object):
+	def __init__(self, weight, life_points_gained,mana_points_gained):
+		Object.__init__(self,weight)
+		self.life_points_gained = life_points_gained
+		self.mana_points_gained=mana_points_gained
+	def use(self,character):
+		character.gain_lp(self.life_points_gained)
+		character.gain_mana(self.mana_points_gained)
+		if character.life_points >character.max_life_points:
+			character.life_points=character.max_life_points
+		if character.mana_points >character.max_mana_points:
+			character.mana_points=character.max_mana_points
+

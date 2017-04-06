@@ -27,14 +27,14 @@ class Ability():
 
 class Character(Ability):
 	def __init__ (self,life_points,max_life_points,mana_points,max_mana_points,
-					experience,level,work,style):
+					experience,level,style):
 		self.life_points=life_points
 		self.max_life_points=max_life_points
 		self.mana_points=mana_points
 		self.max_mana_points=max_mana_points
 		self.level=level
 		self.experience=experience
-		self.work=work
+		self.work=None
 		self.style=style
 		Ability.__init__(self)
 
@@ -61,4 +61,4 @@ class Foe(Character):
 	def __init__(self,life_points,max_life_points,mana_points,max_mana_points,
 					level,style):
 		Character.__init__(self,life_points,max_life_points,mana_points,
-							max_mana_points,0,level,None,style)
+							max_mana_points,0,level,style)
