@@ -36,4 +36,3 @@ class Potion(Object):
 		if character.mana_points >character.max_mana_points:
 			character.mana_points=character.max_mana_points
 
-

@@ -43,6 +43,11 @@ class Equipment():
 		else:
 			self.weight=new_weight
 			self.inventory.append(Object)
+	def drop(self,Object):
+		for obj in self.inventory:
+			if obj.name==Object.name:
+				self.weight-=Object.weight
+				self.inventory.remove(obj)
 	def show_inventory(self):
 		return(self.inventory)
 
