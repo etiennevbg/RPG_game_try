@@ -90,3 +90,17 @@ class Foe(Character):
 					level,style):
 		Character.__init__(self,life_points,max_life_points,mana_points,
 							max_mana_points,0,level,style)
+	def drop_loot(self):
+		from random import randint
+		max_loot=len(self.inventory)
+		number_of_loot=randint(0,max_loot)
+		loots=[]
+		iterable=0
+		while iterable<number_of_loot:
+			new_length_of_inventory=len(self.inventory)
+			j=randint(0,new_length_of_inventory-1)
+			loot=self.inventory[j]
+			loots.append(loot)
+			self.drop(self.inventory[j])
+			iterable+=1
+		return loots
