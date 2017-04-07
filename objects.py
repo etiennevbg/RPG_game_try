@@ -151,4 +151,3 @@ class Food(Potion):
 			return True
 		else:
 			return True
-			

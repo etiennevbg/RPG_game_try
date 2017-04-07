@@ -36,6 +36,7 @@ class Equipment():
 		self.weight_max=weight_max
 		self.weight=0
 		self.inventory=[]
+		self.gold=0
 	def add_in_inventory(self,Object):
 		new_weight=self.weight+Object.weight
 		if new_weight>self.weight_max:
@@ -50,6 +51,10 @@ class Equipment():
 				self.inventory.remove(obj)
 	def show_inventory(self):
 		return(self.inventory)
+	def gain_gold(self, value):
+		self.gold+=value
+	def show_wealth(self):
+		return self.gold
 
 class Character(Ability,Equipment):
 	def __init__ (self,life_points,max_life_points,mana_points,max_mana_points,
@@ -103,4 +108,4 @@ class Foe(Character):
 			loots.append(loot)
 			self.drop(self.inventory[j])
 			iterable+=1
-		return loots
+		return (self.gold,loots)
