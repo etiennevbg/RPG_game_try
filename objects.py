@@ -22,9 +22,12 @@ class Weapon(Object):
 	def equip_weapon(self,character):
 		old_weapon=character.weapon
 		if old_weapon!=None:
-			character.inventory.append(old_weapon)
+			character.add_in_inventory(old_weapon)
 		character.weapon=self
 		character.drop(self)
+	def unequip_weapon(self,character):
+		character.add_in_inventory(self)
+		character.weapon=None
 
 
 class Potion(Object):
