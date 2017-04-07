@@ -45,7 +45,7 @@ class Potion(Object):
 
 
 class Armour(Object):
-	def __init__(self,name,weight,type_of_armour,protection,style,
+	def __init__(self,name,weight,type_of_armour,protection,
 					strength_min=0,endurance_min=0):
 		Object.__init__(self,name,weight)
 		self.type_of_armour=type_of_armour

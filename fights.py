@@ -40,3 +40,16 @@ class Spell(Special_attack):
 			attacker_character.lose_mana(self.mana_required)
 			damaged_dealt=int(random.randint(self.damage_range[0],self.damage_range[1])*1.25*(attacker_character.intelligence+1)-(defender_character.will+1)*1.5)
 			defender_character.lose_lp(damaged_dealt)
+
+class Healing_spell(Spell):
+	def __init__(self,name,distance,mana_required,life_points_gained,intelligence_min=0):
+		Spell.__init__(self,name,distance,mana_required,None,intelligence_min)
+		self.life_points_gained=life_points_gained
+	def use_spell(self,launcher_character,receiver_character):
+		if launcher_character.mana_points<self.mana_required:
+			return "mana too low"
+		else:
+			life_points_restored=int(self.life_points_gained*0.75*(launcher_character.intelligence+1))
+			receiver_character.gain_lp(life_points_restored)
+			if receiver_character.life_points>receiver_character.max_life_points:
+				receiver_character.life_points=receiver_character.max_life_points
