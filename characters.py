@@ -95,10 +95,12 @@ class Foe(Character):
 					level,style):
 		Character.__init__(self,life_points,max_life_points,mana_points,
 							max_mana_points,0,level,style)
-	def drop_loot(self):
+	def drop_loot(self, character_who_killed):
 		from random import randint
 		max_loot=len(self.inventory)
-		number_of_loot=randint(0,max_loot)
+		number_of_loot=int(randint(0,max_loot)*0.5*(character_who_killed.luck+1))
+		if number_of_loot>max_loot:
+			number_of_loot=max_loot
 		loots=[]
 		iterable=0
 		while iterable<number_of_loot:
