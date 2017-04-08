@@ -59,3 +59,14 @@ class Healing_spell(Spell):
 			receiver_character.gain_lp(life_points_restored)
 			if receiver_character.life_points>receiver_character.max_life_points:
 				receiver_character.life_points=receiver_character.max_life_points
+
+class Alternative_attack(Special_attack):
+	def __init__(self,name,distance,stamina_required,damage_range,strength_min=0,
+					agility_min=0,endurance_min=0):
+		Special_attack.__init__(self,name,distance)
+		self.stamina_required=stamina_required
+		self.damage_range=damage_range
+		self.strength_min=strength_min
+		self.agility_min=agility_min
+		self.endurance_min=endurance_min
+		

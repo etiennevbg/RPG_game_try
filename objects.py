@@ -31,20 +31,24 @@ class Weapon(Object):
 
 
 class Potion(Object):
-	def __init__(self,name, weight, life_points_gained,mana_points_gained):
+	def __init__(self,name, weight, life_points_gained,
+						mana_points_gained,stamina_points_gained):
 		Object.__init__(self,name,weight)
 		self.life_points_gained = life_points_gained
 		self.mana_points_gained=mana_points_gained
+		self.stamina_points_gained=stamina_points_gained
 	def use(self,character):
 		character.gain_lp(self.life_points_gained)
 		character.gain_mana(self.mana_points_gained)
 		if character.life_points >character.max_life_points:
 			character.life_points=character.max_life_points
-		if character.mana_points >character.max_mana_points:
-			character.mana_points=character.max_mana_points
 		elif characters.life_points<=0:
 			death=character.die()
 			return death
+		if character.mana_points >character.max_mana_points:
+			character.mana_points=character.max_mana_points
+		if character.stamina_points >character.max_stamina_points:
+			character.stamina_points=character.max_stamina_points
 
 
 class Armour(Object):
@@ -93,7 +97,7 @@ class Armour(Object):
 
 class Food(Potion):
 	def __init__(self,name,weight,life_points_gained,side_effect):
-		Potion.__init__(self,name,weight,life_points_gained,0)
+		Potion.__init__(self,name,weight,life_points_gained,0,0)
 		self.side_effect=side_effect
 		self.duration_of_effect=-1
 	def eat(self,character):
@@ -127,6 +131,9 @@ class Food(Potion):
 			if effect[2]=='max_mana_points':
 				character.max_mana_points+=value
 				character.mana_points+=value
+			if effect[2]=='max_stamina_points':
+				character.max_stamina_points+=value
+				character.stamina_points+=value
 	def end_effect(self,character):
 		self.duration_of_effect-=1
 		if self.duration_of_effect>0:
@@ -154,6 +161,9 @@ class Food(Potion):
 			if effect[2]=='max_mana_points':
 				character.max_mana_points+=value
 				character.mana_points+=value
+			if effect[2]=='max_stamina_points':
+				character.max_stamina_points+=value
+				character.stamina_points+=value
 			return True
 		else:
 			return True

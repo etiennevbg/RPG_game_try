@@ -58,11 +58,13 @@ class Equipment():
 
 class Character(Ability,Equipment):
 	def __init__ (self,life_points,max_life_points,mana_points,max_mana_points,
-					experience,level,style):
+					stamina_points,max_stamina_points,experience,level,style):
 		self.life_points=life_points
 		self.max_life_points=max_life_points
 		self.mana_points=mana_points
 		self.max_mana_points=max_mana_points
+		self.stamina_points=stamina_points
+		self.max_stamina_points=max_stamina_points
 		self.level=level
 		self.experience=experience
 		self.body_protection=0
@@ -73,7 +75,7 @@ class Character(Ability,Equipment):
 
 	def show_caracs(self):
 		return [self.life_points,self.mana_points,
-					self.level,self.experience, self.work]
+					self.stamina,self.level,self.experience, self.work]
 	def show_abilities(self):
 		return [self.strength,self.agility,self.endurance,
 				self.intelligence,self.will,self.luck]
@@ -94,9 +96,9 @@ class Character(Ability,Equipment):
 	
 class Foe(Character):
 	def __init__(self,life_points,max_life_points,mana_points,max_mana_points,
-					level,style):
+					stamina_points,max_stamina_points,level,style):
 		Character.__init__(self,life_points,max_life_points,mana_points,
-							max_mana_points,0,level,style)
+							max_mana_points,stamina_points,max_stamina_points,0,level,style)
 	def drop_loot(self, character_who_killed):
 		from random import randint
 		max_loot=len(self.inventory)
