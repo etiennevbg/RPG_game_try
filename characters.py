@@ -73,6 +73,8 @@ class Character(Ability,Equipment):
 		self.style=style
 		Ability.__init__(self)
 		Equipment.__init__(self)
+	def __repr__(self):
+		return self.name
 
 	def show_caracs(self):
 		return [self.life_points,self.mana_points,
