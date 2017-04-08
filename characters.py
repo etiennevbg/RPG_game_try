@@ -57,8 +57,9 @@ class Equipment():
 		return self.gold
 
 class Character(Ability,Equipment):
-	def __init__ (self,life_points,max_life_points,mana_points,max_mana_points,
+	def __init__ (self,name,life_points,max_life_points,mana_points,max_mana_points,
 					stamina_points,max_stamina_points,experience,level,style):
+		self.name=name
 		self.life_points=life_points
 		self.max_life_points=max_life_points
 		self.mana_points=mana_points
@@ -95,9 +96,9 @@ class Character(Ability,Equipment):
 		return "death"
 	
 class Foe(Character):
-	def __init__(self,life_points,max_life_points,mana_points,max_mana_points,
+	def __init__(self,name,life_points,max_life_points,mana_points,max_mana_points,
 					stamina_points,max_stamina_points,level,style):
-		Character.__init__(self,life_points,max_life_points,mana_points,
+		Character.__init__(self,name,life_points,max_life_points,mana_points,
 							max_mana_points,stamina_points,max_stamina_points,0,level,style)
 	def drop_loot(self, character_who_killed):
 		from random import randint
