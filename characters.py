@@ -89,6 +89,8 @@ class Character(Ability,Equipment):
 		self.experience+=value
 	def level_up(self, nbr=1):
 		self.level+=nbr
+	def die(self):
+		return "death"
 	
 class Foe(Character):
 	def __init__(self,life_points,max_life_points,mana_points,max_mana_points,

@@ -42,6 +42,9 @@ class Potion(Object):
 			character.life_points=character.max_life_points
 		if character.mana_points >character.max_mana_points:
 			character.mana_points=character.max_mana_points
+		elif characters.life_points<=0:
+			death=character.die()
+			return death
 
 
 class Armour(Object):

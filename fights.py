@@ -17,6 +17,9 @@ def plain_attack(attacker_character,defender_character):
 	success=chance_to_touch>random.random()
 	if success:
 		defender_character.lose_lp(damaged_dealt)
+		if defender_character.life_points<=0:
+			death=defender_character.die()
+			return death
 	else:
 		return "miss"
 
@@ -40,6 +43,9 @@ class Spell(Special_attack):
 			attacker_character.lose_mana(self.mana_required)
 			damaged_dealt=int(random.randint(self.damage_range[0],self.damage_range[1])*1.25*(attacker_character.intelligence+1)-(defender_character.will+1)*1.5)
 			defender_character.lose_lp(damaged_dealt)
+			if defender_character.life_points<=0:
+				death=defender_character.die()
+				return death
 
 class Healing_spell(Spell):
 	def __init__(self,name,distance,mana_required,life_points_gained,intelligence_min=0):
