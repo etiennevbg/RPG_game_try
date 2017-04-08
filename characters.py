@@ -75,7 +75,7 @@ class Character(Ability,Equipment):
 
 	def show_caracs(self):
 		return [self.life_points,self.mana_points,
-					self.stamina,self.level,self.experience, self.work]
+					self.stamina_points,self.level,self.experience, self.work]
 	def show_abilities(self):
 		return [self.strength,self.agility,self.endurance,
 				self.intelligence,self.will,self.luck]

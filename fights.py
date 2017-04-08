@@ -61,12 +61,30 @@ class Healing_spell(Spell):
 				receiver_character.life_points=receiver_character.max_life_points
 
 class Alternative_attack(Special_attack):
-	def __init__(self,name,distance,stamina_required,damage_range,strength_min=0,
+	def __init__(self,name,distance,stamina_required,damage_range_add,strength_min=0,
 					agility_min=0,endurance_min=0):
 		Special_attack.__init__(self,name,distance)
 		self.stamina_required=stamina_required
-		self.damage_range=damage_range
+		self.damage_range_add=damage_range_add
 		self.strength_min=strength_min
 		self.agility_min=agility_min
 		self.endurance_min=endurance_min
-		
+	def attack(self,attacker_character,defender_character):
+		if self.strength_min>attacker_character.strength:
+			return "strength too low"
+		elif self.agility_min>attacker_character.agility:
+			return "agility too low"
+		elif self.endurance_min>attacker_character.endurance:
+			return "endurance too low"
+		elif self.stamina_required>attacker_character.stamina_points:
+			return "stamina too low"
+		else:
+			attacker_character.stamina_points-=self.stamina_required
+			normal_damages=attacker_character.weapon.damage_range
+			new_damages=[normal_damages[0]+self.damage_range_add[0],normal_damages[1]+self.damage_range_add[1]]
+			attacker_character.weapon.damage_range=new_damages
+			state_of_attack=plain_attack(attacker_character,defender_character)
+			attacker_character.weapon.damage_range=normal_damages
+			return state_of_attack
+
+
