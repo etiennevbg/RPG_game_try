@@ -20,10 +20,14 @@ class Weapon(Object):
 		self.agility_min=agility_min
 		self.intelligence_min=intelligence_min
 	def equip_weapon(self,character):
+		if not self in character.inventory:
+			return None
 		old_weapon=character.weapon
 		if old_weapon!=None:
 			character.add_in_inventory(old_weapon)
+			character.weight-=old_weapon.weight
 		character.weapon=self
+		character.weight+=self.weight
 		character.drop(self)
 	def unequip_weapon(self,character):
 		character.add_in_inventory(self)
@@ -38,6 +42,8 @@ class Potion(Object):
 		self.mana_points_gained=mana_points_gained
 		self.stamina_points_gained=stamina_points_gained
 	def use(self,character):
+		if not self in character.inventory:
+			return None
 		character.gain_lp(self.life_points_gained)
 		character.gain_mana(self.mana_points_gained)
 		if character.life_points >character.max_life_points:
@@ -60,6 +66,8 @@ class Armour(Object):
 		self.strength_min=strength_min
 		self.endurance_min=endurance_min
 	def equip_armour(self,character):
+		if not self in character.inventory:
+			return None
 		if character.strength<self.strength_min:
 			return "strength too low"
 		if character.endurance<self.endurance_min:
@@ -70,29 +78,35 @@ class Armour(Object):
 				character.head_equipment=self
 				if old_armour!=None:
 					character.add_in_inventory(old_armour)
+					character.weight-=old_armour.weight
 			elif self.type_of_armour=="arm":
 				old_armour=character.arm_equipment
 				character.arm_equipment=self
 				if old_armour!=None:
 					character.add_in_inventory(old_armour)
+					character.weight-=old_armour.weight
 			elif self.type_of_armour=="torso":
 				old_armour=character.torso_equipment
 				character.torso_equipment=self
 				if old_armour!=None:
 					character.add_in_inventory(old_armour)
+					character.weight-=old_armour.weight
 			elif self.type_of_armour=="leg":
 				old_armour=character.leg_equipment
 				character.leg_equipment=self
 				if old_armour!=None:
 					character.add_in_inventory(old_armour)
+					character.weight-=old_armour.weight
 			elif self.type_of_armour=="foot":
 				old_armour=character.foot_equipment
 				character.foot_equipment=self
 				if old_armour!=None:
 					character.add_in_inventory(old_armour)
+					character.weight-=old_armour.weight
 			character.body_protection=character.body_protection+self.protection
 			if old_armour!=None:
 				character.body_protection-=old_armour.protection
+			character.weight+=self.weight
 			character.drop(self)
 
 class Food(Potion):
