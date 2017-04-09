@@ -7,8 +7,7 @@ import copy
 	foes, attacks and objects using from 0 to all arguments"""
 
 def create_foe(foe_name,level=None):
-	caracterisation=foes[foe_name]
-	caracterisation_foe=copy.deepcopy(caracterisation)
+	caracterisation_foe=copy.deepcopy(foes[foe_name])
 	if level!=None:
 		if level<caracterisation_foe[0][0]:
 			level=caracterisation_foe[0][0]
@@ -56,6 +55,78 @@ def create_foe(foe_name,level=None):
 	foe.change_luck(abilities[5])
 	return foe
 
+def create_armour(category_of_armour=None,type_of_armour=None):
+	if category_of_armour==None:
+		choice_of_category=random.randint(0,len(category_of_armours)-1)
+		category_of_armour=category_of_armours[choice_of_category]
+	if type_of_armour==None:
+		choice_of_type=random.randint(0,len(type_of_armours)-1)
+		type_of_armour=type_of_armours[choice_of_type]
+	armour_key="{} {}".format(category_of_armour,type_of_armour)
+	caracterisation_armour=copy.deepcopy(armours[armour_key])
+	choice_of_armour=random.randint(0,len(caracterisation_armour)-1)
+	armour_chosen=caracterisation_armour[choice_of_armour]
+	name=armour_chosen[0]
+	weight=armour_chosen[1]
+	protection=random.randint(armour_chosen[2][0],armour_chosen[2][1])
+	if category_of_armour=='light':
+		strength_min=0
+		endurance_min=0
+	elif category_of_armour=='medium':
+		strength_min=1
+		endurance_min=2
+	elif category_of_armour=='heavy':
+		strength_min=3
+		endurance_min=5
+	return objects.Armour(name,weight,type_of_armour,protection,
+							strength_min,endurance_min)
+
+
 """foes={name:level_range,abilitity_ranges}"""
 foes={"ogre low level":([1,3],[[2,5],[1,4],[1,5],[0,2],[0,2],[0,3]]),
 		"ogre medium level":([4,7],[[4,8],[4,7],[3,6],[2,4],[2,4],[1,5]])}
+
+
+type_of_armours=("head","arm","torso","leg","foot")
+category_of_armours=("light","medium","heavy")
+
+"""armours={'category type':[
+							(name1,weight1,protection_range1),
+							(name2,weight2,protection_range2)
+							]}"""
+armours={'heavy head':[
+				("iron helmet",2,[5,10]),
+				("bronze helmet",2.5,[8,12])
+				],
+			'medium head':[
+				("reenforced cap",1.25,[4,6])
+				],
+			'light head':[
+				('iron crown',0.5,[2,4]),
+				('gold crown',0.75,[3,5]),
+				('fur chapka',0.25,[1,3])
+				],
+			'heavy arm':[
+				],
+			'medium arm':[
+				],
+			'light arm':[
+				],
+			'heavy torso':[
+				],
+			'medium torso':[
+				],
+			'light torso':[
+				],
+			'heavy leg':[
+				],
+			'medium leg':[
+				],
+			'light leg':[
+				],
+			'heavy foot':[
+				],
+			'medium foot':[
+				],
+			'light foot':[
+				]}
