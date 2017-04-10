@@ -203,28 +203,40 @@ armours={'heavy head':[
 				('fur chapka',0.25,[1,3])
 				],
 			'heavy arm':[
+				('iron gantlet',2,[7,12])
 				],
 			'medium arm':[
+				('leather gantlet',1,[5,8])
 				],
 			'light arm':[
+				('textile gantlet',0.5,[3,6])
 				],
 			'heavy torso':[
+				('iron plastron',4.5,[18,22])
 				],
 			'medium torso':[
+				('leather plastron',3,[14,18])
 				],
 			'light torso':[
+				('textile plastron',1.75,[11,15])
 				],
 			'heavy leg':[
+				('iron legs',3.5,[10,15])
 				],
 			'medium leg':[
+				('leather legs',2.5,[7,10])
 				],
 			'light leg':[
+				('textile legs',1.25,[5,8])
 				],
 			'heavy foot':[
+				('iron boots',2,[7,12])
 				],
 			'medium foot':[
+				('leather boots',1,[5,8])
 				],
 			'light foot':[
+				('textile boots',0.5,[3,6])
 				]}
 
 
@@ -245,11 +257,16 @@ weapons={'heavy mele':[
 				('knuckles',1,[[3,6],[6,8]])
 				],
 			'heavy distance':[
+				('artillery',5,[[18,22],[22,25])
 				],
 			'medium distance':[
+				('oak bow',3,[[10,15],[16,19]])
+				('magic staff',2.5,[[7,9],[13,16]])
 				],
 			'light distance':[
+				('orm bow',1.75,[[4,7],[8,10]])
 				]}
 
 """foods=[food_name1,food_name2,...]"""
-foods=['cream pie','beef rost','ratatouille']
+foods=['cream pie','beef rost','ratatouille','pancakes','fruit salad',
+		'ceasar salad']
