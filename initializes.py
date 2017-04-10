@@ -39,11 +39,8 @@ def create_foe(foe_name,level=None):
 	max_stamina_points=10+2*abilities[2]
 	non_space=True
 	number=0
-	while non_space:
-		number+=1
-		if foe_name[number]==' ':
-			non_space=False
-	name=foe_name[:number]
+	foe_name=foe_name.split()
+	name=foe_name[0]
 	#  let's now create the instance
 	foe=characters.Foe(name,max_life_points,max_life_points,max_mana_points,max_mana_points,
 							max_stamina_points,max_stamina_points,level,None)
@@ -53,6 +50,62 @@ def create_foe(foe_name,level=None):
 	foe.change_intelligence(abilities[3])
 	foe.change_will(abilities[4])
 	foe.change_luck(abilities[5])
+	#  let's now equip the foe with pieces of armour
+	if foe_name[1]=='low':
+		category_of_foe='light'
+	elif foe_name[1]=='medium':
+		category_of_foe='medium'
+	elif foe_name[1]=='high':
+		category_of_foe='heavy'
+	number_elements_of_armour=random.randint(1,5)
+	while True:
+		torso_equipment=create_armour(category_of_foe,'torso')
+		foe.add_in_inventory(torso_equipment)
+		torso_equipment.equip_armour(foe)
+		number_elements_of_armour-=1
+		if number_elements_of_armour==0:
+			break
+		leg_equipment=create_armour(category_of_foe,'leg')
+		foe.add_in_inventory(leg_equipment)
+		leg_equipment.equip_armour(foe)
+		number_elements_of_armour-=1
+		if number_elements_of_armour==0:
+			break
+		foot_equipment=create_armour(category_of_foe,'foot')
+		foe.add_in_inventory(foot_equipment)
+		foot_equipment.equip_armour(foe)
+		number_elements_of_armour-=1
+		if number_elements_of_armour==0:
+			break
+		arm_equipment=create_armour(category_of_foe,'arm')
+		foe.add_in_inventory(arm_equipment)
+		arm_equipment.equip_armour(foe)
+		number_elements_of_armour-=1
+		if number_elements_of_armour==0:
+			break
+		head_equipment=create_armour(category_of_foe,'head')
+		foe.add_in_inventory(head_equipment)
+		head_equipment.equip_armour(foe)
+		number_elements_of_armour-=1
+		if number_elements_of_armour==0:
+			break
+	#  let's give a weapon to the foe
+	weapon=create_weapon(category_of_foe)
+	foe.add_in_inventory(weapon)
+	weapon.equip_weapon(foe)
+	#  now let's put loots in its inventory
+	number_of_objects=random.randint(0,4)
+	for i in range(number_of_objects):
+		choice_of_object=random.randint(0,9)
+		if choice_of_object==0:
+			new_object=create_weapon()
+			foe.add_in_inventory(new_object)
+		elif choice_of_object==1:
+			new_object=create_armour()
+			foe.add_in_inventory(new_object)
+		else:
+			new_object=create_consumable()
+			foe.add_in_inventory(new_object)
 	return foe
 
 def create_armour(category_of_armour=None,type_of_armour=None):
@@ -257,10 +310,10 @@ weapons={'heavy mele':[
 				('knuckles',1,[[3,6],[6,8]])
 				],
 			'heavy distance':[
-				('artillery',5,[[18,22],[22,25])
+				('artillery',5,[[18,22],[22,25]])
 				],
 			'medium distance':[
-				('oak bow',3,[[10,15],[16,19]])
+				('oak bow',3,[[10,15],[16,19]]),
 				('magic staff',2.5,[[7,9],[13,16]])
 				],
 			'light distance':[
