@@ -124,6 +124,59 @@ def create_weapon(category_of_weapon=None,range_of_weapon=None):
 	return objects.Weapon(name,weight,distance,damage_range,
 							strength_min,agility_min,intelligence_min)
 
+def create_consumable(consumable_type=None,side_effect=None):
+	if consumable_type==None:
+		choice_of_consumable=random.randint(0,8)
+		if choice_of_consumable==0:
+			consumable_type='health potion'
+		elif choice_of_consumable==1:
+			consumable_type='mana potion'
+		elif choice_of_consumable==2:
+			consumable_type='stamina potion'
+		else:
+			consumable_type='food'
+	if consumable_type=='health potion':
+		life_points_gained=random.randint(1,6)*25
+		weight=life_points_gained/100
+		return objects.Potion("health potion ({})".format(life_points_gained),
+								weight,life_points_gained,0,0)
+	if consumable_type=='mana potion':
+		mana_points_gained=random.randint(1,6)*10
+		weight=mana_points_gained/40
+		return objects.Potion("mana potion ({})".format(mana_points_gained),
+								weight,0,mana_points_gained,0)
+	if consumable_type=='stamina potion':
+		stamina_points_gained=random.randint(1,6)*3
+		weight=stamina_points_gained/12
+		return objects.Potion("stamina potion ({})".format(stamina_points_gained),
+								weight,0,0,stamina_points_gained)
+	if consumable_type=='food':
+		life_points_gained=random.randint(1,4)*5
+		weight=life_points_gained/20
+		if side_effect==None:
+			gain_lose=random.randint(0,4)
+			if gain_lose==0:
+				gain_lose='gain'
+			else:
+				gain_lose='lose'
+			effect=['strength','agility','endurance','intelligence','will','luck',
+						'max_life_points','max_mana_points','max_stamina_points']
+			choice_of_effect=random.randint(0,len(effect)-1)
+			effect_chosen=effect[choice_of_effect]
+			value_of_effect=random.randint(1,3)
+			if effect_chosen=="max_life_points":
+				value_of_effect=value_of_effect*15
+			elif effect_chosen=="max_mana_points":
+				value_of_effect=value_of_effect*10
+			elif effect_chosen=="max_stamina_points":
+				value_of_effect=value_of_effect*3
+			number_of_rounds=random.randint(1,5)
+			side_effect="{} {} {} for {} round(s)".format(gain_lose,value_of_effect,
+															effect_chosen,number_of_rounds)
+		name=foods[random.randint(0,len(foods)-1)]
+		return objects.Food(name,weight,life_points_gained,side_effect)
+
+
 """foes={name:level_range,abilitity_ranges}"""
 foes={"ogre low level":([1,3],[[2,5],[1,4],[1,5],[0,2],[0,2],[0,3]]),
 		"ogre medium level":([4,7],[[4,8],[4,7],[3,6],[2,4],[2,4],[1,5]])}
@@ -197,3 +250,6 @@ weapons={'heavy mele':[
 				],
 			'light distance':[
 				]}
+
+"""foods=[food_name1,food_name2,...]"""
+foods=['cream pie','beef rost','ratatouille']
