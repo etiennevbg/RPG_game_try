@@ -73,14 +73,56 @@ def create_armour(category_of_armour=None,type_of_armour=None):
 		strength_min=0
 		endurance_min=0
 	elif category_of_armour=='medium':
-		strength_min=1
-		endurance_min=2
+		strength_min=2
+		endurance_min=3
 	elif category_of_armour=='heavy':
-		strength_min=3
-		endurance_min=5
+		strength_min=4
+		endurance_min=6
 	return objects.Armour(name,weight,type_of_armour,protection,
 							strength_min,endurance_min)
 
+def create_weapon(category_of_weapon=None,range_of_weapon=None):
+	if category_of_weapon==None:
+		choice_of_category=random.randint(0,len(category_of_armours)-1)
+		category_of_weapon=category_of_armours[choice_of_category]
+	if range_of_weapon==None:
+		choice_of_range=random.randint(0,len(range_of_weapons)-1)
+		range_of_weapon=range_of_weapons[choice_of_range]
+	weapon_key="{} {}".format(category_of_weapon,range_of_weapon)
+	caracterisation_weapon=copy.deepcopy(weapons[weapon_key])
+	choice_of_weapon=random.randint(0,len(caracterisation_weapon)-1)
+	weapon_chosen=caracterisation_weapon[choice_of_weapon]
+	name=weapon_chosen[0]
+	weight=weapon_chosen[1]
+	min_attack=random.randint(weapon_chosen[2][0][0],weapon_chosen[2][0][1])
+	max_attack=random.randint(weapon_chosen[2][1][0],weapon_chosen[2][1][1])
+	damage_range=[min_attack,max_attack]
+	if range_of_weapon=='mele':
+		distance=1
+		intelligence_min=0
+		if category_of_weapon=='light':
+			strength_min=1
+			agility_min=0
+		elif category_of_weapon=='medium':
+			strength_min=3
+			agility_min=2
+		elif category_of_weapon=='heavy':
+			strength_min=6
+			agility_min=4
+	elif range_of_weapon=='distance':
+		distance=25
+		strength_min=0
+		if category_of_weapon=='light':
+			agility_min=1
+			intelligence_min=0
+		elif category_of_weapon=='medium':
+			agility_min=3
+			intelligence_min=2
+		elif category_of_weapon=='heavy':
+			agility_min=6
+			intelligence_min=4
+	return objects.Weapon(name,weight,distance,damage_range,
+							strength_min,agility_min,intelligence_min)
 
 """foes={name:level_range,abilitity_ranges}"""
 foes={"ogre low level":([1,3],[[2,5],[1,4],[1,5],[0,2],[0,2],[0,3]]),
@@ -89,6 +131,7 @@ foes={"ogre low level":([1,3],[[2,5],[1,4],[1,5],[0,2],[0,2],[0,3]]),
 
 type_of_armours=("head","arm","torso","leg","foot")
 category_of_armours=("light","medium","heavy")
+range_of_weapons=['mele','distance']
 
 """armours={'category type':[
 							(name1,weight1,protection_range1),
@@ -129,4 +172,28 @@ armours={'heavy head':[
 			'medium foot':[
 				],
 			'light foot':[
+				]}
+
+
+"""weapons={'category type':[
+				('name1',weight1,[attack_min_range1,attack_max_range1]),
+				('name2',weight2,[attack_min_range2,attack_max_range2])
+				]}"""
+weapons={'heavy mele':[
+				('adamantium axe',6,[[23,26],[27,30]]),
+				('adamantium sword',5,[[21,24],[24,28]])
+				],
+			'medium mele':[
+				('iron sword',3,[[14,18],[18,22]])
+				],
+			'light mele':[
+				('iron dagger',1.5,[[8,10],[10,12]]),
+				('wood staff',2,[[4,6],[13,15]]),
+				('knuckles',1,[[3,6],[6,8]])
+				],
+			'heavy distance':[
+				],
+			'medium distance':[
+				],
+			'light distance':[
 				]}

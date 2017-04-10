@@ -11,7 +11,7 @@ class Object():
 
 
 class Weapon(Object):
-	def __init__(self,name,weight,distance,damage_range,style,
+	def __init__(self,name,weight,distance,damage_range,
 				strength_min=0,agility_min=0,intelligence_min=0):
 		Object.__init__(self,name,weight)
 		self.range=distance
