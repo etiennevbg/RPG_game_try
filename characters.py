@@ -69,7 +69,7 @@ class Skills():
 		for increment in range(len(self.list_of_attacks)):
 			if self.list_of_attacks[increment].name==alternative_attack.name :
 				return None
-		list_of_attacks.append(alternative_attack)
+		self.list_of_attacks.append(alternative_attack)
 
 class Character(Ability,Equipment,Skills):
 	def __init__ (self,name,life_points,max_life_points,mana_points,max_mana_points,
@@ -134,3 +134,11 @@ class Foe(Character):
 			self.drop(self.inventory[j])
 			iterable+=1
 		return (self.gold,loots)
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""foes={name:level_range,abilitity_ranges}"""
+foes={"ogre low level":([1,3],[[2,5],[1,4],[1,5],[0,2],[0,2],[0,3]]),
+		"ogre medium level":([4,7],[[4,8],[4,7],[3,6],[2,4],[2,4],[1,5]])}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

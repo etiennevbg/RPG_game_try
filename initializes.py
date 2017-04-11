@@ -8,7 +8,7 @@ import copy
 	foes, attacks and objects using from 0 to all arguments"""
 
 def create_foe(foe_name,level=None):
-	caracterisation_foe=copy.deepcopy(foes[foe_name])
+	caracterisation_foe=copy.deepcopy(characters.foes[foe_name])
 	if level!=None:
 		if level<caracterisation_foe[0][0]:
 			level=caracterisation_foe[0][0]
@@ -117,7 +117,7 @@ def create_armour(category_of_armour=None,type_of_armour=None):
 		choice_of_type=random.randint(0,len(type_of_armours)-1)
 		type_of_armour=type_of_armours[choice_of_type]
 	armour_key="{} {}".format(category_of_armour,type_of_armour)
-	caracterisation_armour=copy.deepcopy(armours[armour_key])
+	caracterisation_armour=copy.deepcopy(objects.armours[armour_key])
 	choice_of_armour=random.randint(0,len(caracterisation_armour)-1)
 	armour_chosen=caracterisation_armour[choice_of_armour]
 	name=armour_chosen[0]
@@ -145,7 +145,7 @@ def create_weapon(category_of_weapon=None,range_of_weapon=None):
 		choice_of_range=random.randint(0,len(range_of_weapons)-1)
 		range_of_weapon=range_of_weapons[choice_of_range]
 	weapon_key="{} {}".format(category_of_weapon,range_of_weapon)
-	caracterisation_weapon=copy.deepcopy(weapons[weapon_key])
+	caracterisation_weapon=copy.deepcopy(objects.weapons[weapon_key])
 	choice_of_weapon=random.randint(0,len(caracterisation_weapon)-1)
 	weapon_chosen=caracterisation_weapon[choice_of_weapon]
 	name=weapon_chosen[0]
@@ -229,7 +229,7 @@ def create_consumable(consumable_type=None,side_effect=None):
 			number_of_rounds=random.randint(1,5)
 			side_effect="{} {} {} for {} round(s)".format(gain_lose,value_of_effect,
 															effect_chosen,number_of_rounds)
-		name=foods[random.randint(0,len(foods)-1)]
+		name=objects.foods[random.randint(0,len(objects.foods)-1)]
 		return objects.Food(name,weight,life_points_gained,side_effect)
 
 def create_set_of_spells(character,number_of_spells=None,category_of_spells=None):
@@ -256,96 +256,27 @@ def create_set_of_spells(character,number_of_spells=None,category_of_spells=None
 			category_of_spells=None
 		spells_left+=1
 
+def create_set_of_attacks(character,number_of_attacks=None,category_of_attacks=None):
+	if number_of_attacks==None:
+		number_of_attacks=random.randint(0,4)
+	attacks_left=0
+	while attacks_left <number_of_attacks:
+		if category_of_attacks==None:
+			no_category=True
+			category_of_attacks=fights.type_of_attacks[random.randint(0,len(fights.type_of_attacks)-1)]
+		else:
+			no_category=False
+		new_attacks=copy.deepcopy(fights.alternative_attacks[category_of_attacks])
+		number_attacks_initial=len(character.list_of_attacks)
+		new_attack_index=0
+		while len(character.list_of_attacks)==number_attacks_initial:
+			if new_attack_index==len(new_attacks):
+				attacks_left-=1
+				category_of_attacks=None
+				break
+			character.add_attack(new_attacks[new_attack_index])
+			new_attack_index+=1
+		if no_category:
+			category_of_attacks=None
+		attacks_left+=1
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""foes={name:level_range,abilitity_ranges}"""
-foes={"ogre low level":([1,3],[[2,5],[1,4],[1,5],[0,2],[0,2],[0,3]]),
-		"ogre medium level":([4,7],[[4,8],[4,7],[3,6],[2,4],[2,4],[1,5]])}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""armours={'category type':[
-											(name1,weight1,protection_range1),
-											(name2,weight2,protection_range2)
-											]}"""
-armours={'heavy head':[
-				("iron helmet",2,[5,10]),
-				("bronze helmet",2.5,[8,12])
-				],
-			'medium head':[
-				("reenforced cap",1.25,[4,6])
-				],
-			'light head':[
-				('iron crown',0.5,[2,4]),
-				('gold crown',0.75,[3,5]),
-				('fur chapka',0.25,[1,3])
-				],
-			'heavy arm':[
-				('iron gantlet',2,[7,12])
-				],
-			'medium arm':[
-				('leather gantlet',1,[5,8])
-				],
-			'light arm':[
-				('textile gantlet',0.5,[3,6])
-				],
-			'heavy torso':[
-				('iron plastron',4.5,[18,22])
-				],
-			'medium torso':[
-				('leather plastron',3,[14,18])
-				],
-			'light torso':[
-				('textile plastron',1.75,[11,15])
-				],
-			'heavy leg':[
-				('iron legs',3.5,[10,15])
-				],
-			'medium leg':[
-				('leather legs',2.5,[7,10])
-				],
-			'light leg':[
-				('textile legs',1.25,[5,8])
-				],
-			'heavy foot':[
-				('iron boots',2,[7,12])
-				],
-			'medium foot':[
-				('leather boots',1,[5,8])
-				],
-			'light foot':[
-				('textile boots',0.5,[3,6])
-				]}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""weapons={'category type':[
-								('name1',weight1,[attack_min_range1,attack_max_range1]),
-								('name2',weight2,[attack_min_range2,attack_max_range2])
-								]}"""
-weapons={'heavy mele':[
-				('adamantium axe',6,[[23,26],[27,30]]),
-				('adamantium sword',5,[[21,24],[24,28]])
-				],
-			'medium mele':[
-				('iron sword',3,[[14,18],[18,22]])
-				],
-			'light mele':[
-				('iron dagger',1.5,[[8,10],[10,12]]),
-				('wood staff',2,[[4,6],[13,15]]),
-				('knuckles',1,[[3,6],[6,8]])
-				],
-			'heavy distance':[
-				('artillery',5,[[18,22],[22,25]])
-				],
-			'medium distance':[
-				('oak bow',3,[[10,15],[16,19]]),
-				('magic staff',2.5,[[7,9],[13,16]])
-				],
-			'light distance':[
-				('orm bow',1.75,[[4,7],[8,10]])
-				]}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""foods=[food_name1,food_name2,...]"""
-foods=['cream pie','beef rost','ratatouille','pancakes','fruit salad',
-		'ceasar salad']

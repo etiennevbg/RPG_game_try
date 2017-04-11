@@ -181,3 +181,90 @@ class Food(Potion):
 			return True
 		else:
 			return True
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""armours={'category type':[
+											(name1,weight1,protection_range1),
+											(name2,weight2,protection_range2)
+											]}"""
+armours={'heavy head':[
+				("iron helmet",2,[5,10]),
+				("bronze helmet",2.5,[8,12])
+				],
+			'medium head':[
+				("reenforced cap",1.25,[4,6])
+				],
+			'light head':[
+				('iron crown',0.5,[2,4]),
+				('gold crown',0.75,[3,5]),
+				('fur chapka',0.25,[1,3])
+				],
+			'heavy arm':[
+				('iron gantlet',2,[7,12])
+				],
+			'medium arm':[
+				('leather gantlet',1,[5,8])
+				],
+			'light arm':[
+				('textile gantlet',0.5,[3,6])
+				],
+			'heavy torso':[
+				('iron plastron',4.5,[18,22])
+				],
+			'medium torso':[
+				('leather plastron',3,[14,18])
+				],
+			'light torso':[
+				('textile plastron',1.75,[11,15])
+				],
+			'heavy leg':[
+				('iron legs',3.5,[10,15])
+				],
+			'medium leg':[
+				('leather legs',2.5,[7,10])
+				],
+			'light leg':[
+				('textile legs',1.25,[5,8])
+				],
+			'heavy foot':[
+				('iron boots',2,[7,12])
+				],
+			'medium foot':[
+				('leather boots',1,[5,8])
+				],
+			'light foot':[
+				('textile boots',0.5,[3,6])
+				]}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""weapons={'category type':[
+								('name1',weight1,[attack_min_range1,attack_max_range1]),
+								('name2',weight2,[attack_min_range2,attack_max_range2])
+								]}"""
+weapons={'heavy mele':[
+				('adamantium axe',6,[[23,26],[27,30]]),
+				('adamantium sword',5,[[21,24],[24,28]])
+				],
+			'medium mele':[
+				('iron sword',3,[[14,18],[18,22]])
+				],
+			'light mele':[
+				('iron dagger',1.5,[[8,10],[10,12]]),
+				('wood staff',2,[[4,6],[13,15]]),
+				('knuckles',1,[[3,6],[6,8]])
+				],
+			'heavy distance':[
+				('artillery',5,[[18,22],[22,25]])
+				],
+			'medium distance':[
+				('oak bow',3,[[10,15],[16,19]]),
+				('magic staff',2.5,[[7,9],[13,16]])
+				],
+			'light distance':[
+				('orm bow',1.75,[[4,7],[8,10]])
+				]}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""foods=[food_name1,food_name2,...]"""
+foods=['cream pie','beef rost','ratatouille','pancakes','fruit salad',
+		'ceasar salad']
