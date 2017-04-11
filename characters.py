@@ -92,8 +92,8 @@ class Position():
 		else:
 			new_x=speed*(x-self.x)/distance_to_run
 			new_y=speed*(y-self.y)/distance_to_run
-			self.x=int(new_x)
-			self.y=int(new_y)
+			self.x=new_x
+			self.y=new_y
 	def set_to_position(self,x,y):
 		self.x=x
 		self.y=y
@@ -140,14 +140,14 @@ class Character(Ability,Equipment,Skills,Position):
 		self.level+=nbr
 	def die(self):
 		return "death"
-	
+
+import random
 class Foe(Character):
 	def __init__(self,name,life_points,max_life_points,mana_points,max_mana_points,
 					stamina_points,max_stamina_points,level,style):
 		Character.__init__(self,name,life_points,max_life_points,mana_points,
 							max_mana_points,stamina_points,max_stamina_points,0,level,style)
 	def drop_loot(self, character_who_killed):
-		from random import randint
 		max_loot=len(self.inventory)
 		number_of_loot=int(randint(0,max_loot)*0.5*(character_who_killed.luck+1))
 		if number_of_loot>max_loot:
@@ -162,8 +162,23 @@ class Foe(Character):
 			self.drop(self.inventory[j])
 			iterable+=1
 		return (self.gold,loots)
-	def distance_to_foe(self,character):
-		return int(sqrt((self.x-character.x)**2+(self.y-character.y)**2))
+	def distance_to_foe(self,main_character):
+		return sqrt((self.x-main_character.x)**2+(self.y-main_character.y)**2)
+	def detection_of_foe(self,main_character):
+		distance_foe=self.distance_to_foe(main_character)
+		if distance_foe<30:
+			"""detection_chance=[[proba1,distance1],[proba2,distance2]...]"""
+			detection_chance=[[0.9,5],[0.7,10],[0.45,15],[0.20,20],[0.05,25]]
+			detected=0
+			for i in range(len(detection_chance)):
+				element_of_non_detection=1
+				for j in range(len(detection_chance)):
+					if j!=i:
+						element_of_non_detection*=(distance_foe-detection_chance[j][1])/float(detection_chance[i][1]-detection_chance[j][1])
+				detected+=detection_chance[i][0]*element_of_non_detection
+			probability_of_non_detection=random.random()
+			if detected<probability_of_non_detection:
+				return "detected"
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
