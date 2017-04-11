@@ -232,12 +232,12 @@ def create_consumable(consumable_type=None,side_effect=None):
 		return objects.Food(name,weight,life_points_gained,side_effect)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-					"""foes={name:level_range,abilitity_ranges}"""
+"""""""""""""""""""""""""""""foes={name:level_range,abilitity_ranges}"""
 foes={"ogre low level":([1,3],[[2,5],[1,4],[1,5],[0,2],[0,2],[0,3]]),
 		"ogre medium level":([4,7],[[4,8],[4,7],[3,6],[2,4],[2,4],[1,5]])}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-				"""armours={'category type':[
+"""""""""""""""""""""""""""""armours={'category type':[
 											(name1,weight1,protection_range1),
 											(name2,weight2,protection_range2)
 											]}"""
@@ -291,7 +291,7 @@ armours={'heavy head':[
 				]}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-				"""weapons={'category type':[
+"""""""""""""""""""""""""""weapons={'category type':[
 								('name1',weight1,[attack_min_range1,attack_max_range1]),
 								('name2',weight2,[attack_min_range2,attack_max_range2])
 								]}"""
@@ -319,6 +319,6 @@ weapons={'heavy mele':[
 				]}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-					"""foods=[food_name1,food_name2,...]"""
+"""""""""""""""""""""""""""""""foods=[food_name1,food_name2,...]"""
 foods=['cream pie','beef rost','ratatouille','pancakes','fruit salad',
 		'ceasar salad']

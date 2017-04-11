@@ -93,7 +93,7 @@ class Alternative_attack(Special_attack):
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-									"""list of Spells"""
+"""								""""""list of Spells""""""                             """
 fireflamme=Spell('fire flamme',15,8,[12,15],2)
 fireball=Spell('fire ball',18,12,[16,20],4)
 firemeteor=Spell('fire meteor',18,20,[25,35],7)
@@ -102,7 +102,7 @@ lightbolt=Spell('light bolt',20,15,[18,22],5)
 lightnings=Spell('lightnings',20,20,[28,32],8)
 frost=Spell('frost',8,10,[14,18],3)
 iceprison=Spell('ice prison',5,25,[30,38],8)
-			""""""""""""
+""""""""""""""""""""""""""""""""""""
 firstaid=Healing_spell('first aid',5,8,15,2)
 firstaid_extended=Healing_spell('first aid extended',15,113,15,2)
 healing=Healing_spell('healing',5,15,40,4)
@@ -110,13 +110,13 @@ healing_extended=Healing_spell('healing extended',15,20,40,4)
 restoration=Healing_spell('restoration',5,25,80,7)
 restoration_extended=Healing_spell('restoration extended',5,30,80,7)
 
-			""""""""""""
+""""""""""""""""""""""""""""""""""""
 type_of_spells=['fire','electricity','ice']
-			""""""""""""
+""""""""""""""""""""""""""""""""""""
 spells={'fire':[fireflamme,fireball,firemeteor],
 		'electricity':[shock,lightbolt,lightnings],
 		'ice':[frost,iceprison],
 		'healing':[firstaid,firstaid_extended,healing,healing_extended,restoration,restoration_extended]}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-							"""list of Alternative Attacks"""
+"""						""""""list of Alternative Attacks""""""                         """

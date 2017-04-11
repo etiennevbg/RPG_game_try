@@ -56,7 +56,18 @@ class Equipment():
 	def show_wealth(self):
 		return self.gold
 
-class Character(Ability,Equipment):
+class Skills():
+	def __init__(self):
+		self.list_of_spells=[]
+		self.list_of_attacks=[]
+	def add_spell(self,spell):
+		if not spell in self.list_of_spells:
+			self.list_of_spells.append(spell)
+	def add_attack(self,alternative_attack):
+		if not alternative_attack in self.list_of_attacks:
+			list_of_attacks.append(alternative_attack)
+
+class Character(Ability,Equipment,Skills):
 	def __init__ (self,name,life_points,max_life_points,mana_points,max_mana_points,
 					stamina_points,max_stamina_points,experience,level,style):
 		self.name=name
@@ -73,6 +84,7 @@ class Character(Ability,Equipment):
 		self.style=style
 		Ability.__init__(self)
 		Equipment.__init__(self)
+		Skills.__init__(self)
 	def __repr__(self):
 		return self.name
 
