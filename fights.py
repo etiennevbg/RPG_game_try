@@ -39,6 +39,8 @@ class Spell(Special_attack):
 	def use_spell(self,attacker_character,defender_character):
 		if attacker_character.mana_points<self.mana_required:
 			return "mana too low"
+		if attacker_character.intelligence<intelligence_min:
+			return "intelligence too low"
 		else:
 			attacker_character.lose_mana(self.mana_required)
 			damaged_dealt=int(random.randint(self.damage_range[0],self.damage_range[1])*1.25*(attacker_character.intelligence+1)-(defender_character.will+1)*1.5)
@@ -54,6 +56,8 @@ class Healing_spell(Spell):
 	def use_spell(self,launcher_character,receiver_character):
 		if launcher_character.mana_points<self.mana_required:
 			return "mana too low"
+		if launcher_character.intelligence<intelligence_min:
+			return "intelligence too low"
 		else:
 			life_points_restored=int(self.life_points_gained*0.75*(launcher_character.intelligence+1))
 			receiver_character.gain_lp(life_points_restored)
@@ -88,3 +92,31 @@ class Alternative_attack(Special_attack):
 			return state_of_attack
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+									"""list of Spells"""
+fireflamme=Spell('fire flamme',15,8,[12,15],2)
+fireball=Spell('fire ball',18,12,[16,20],4)
+firemeteor=Spell('fire meteor',18,20,[25,35],7)
+shock=Spell('shock',25,5,[6,10],2)
+lightbolt=Spell('light bolt',20,15,[18,22],5)
+lightnings=Spell('lightnings',20,20,[28,32],8)
+frost=Spell('frost',8,10,[14,18],3)
+iceprison=Spell('ice prison',5,25,[30,38],8)
+			""""""""""""
+firstaid=Healing_spell('first aid',5,8,15,2)
+firstaid_extended=Healing_spell('first aid extended',15,113,15,2)
+healing=Healing_spell('healing',5,15,40,4)
+healing_extended=Healing_spell('healing extended',15,20,40,4)
+restoration=Healing_spell('restoration',5,25,80,7)
+restoration_extended=Healing_spell('restoration extended',5,30,80,7)
+
+			""""""""""""
+type_of_spells=['fire','electricity','ice']
+			""""""""""""
+spells={'fire':[fireflamme,fireball,firemeteor],
+		'electricity':[shock,lightbolt,lightnings],
+		'ice':[frost,iceprison],
+		'healing':[firstaid,firstaid_extended,healing,healing_extended,restoration,restoration_extended]}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+							"""list of Alternative Attacks"""
