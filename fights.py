@@ -65,8 +65,8 @@ class Healing_spell(Spell):
 				receiver_character.life_points=receiver_character.max_life_points
 
 class Alternative_attack(Special_attack):
-	def __init__(self,name,distance,stamina_required,damage_range_add,strength_min=0,
-					agility_min=0,endurance_min=0):
+	def __init__(self,name,distance,stamina_required,damage_range_add,type_of_weapon=None,
+					strength_min=0,agility_min=0,endurance_min=0):
 		Special_attack.__init__(self,name,distance)
 		self.stamina_required=stamina_required
 		self.damage_range_add=damage_range_add
@@ -82,16 +82,19 @@ class Alternative_attack(Special_attack):
 			return "endurance too low"
 		elif self.stamina_required>attacker_character.stamina_points:
 			return "stamina too low"
-		else:
-			attacker_character.stamina_points-=self.stamina_required
-			normal_damages=attacker_character.weapon.damage_range
-			new_damages=[normal_damages[0]+self.damage_range_add[0],normal_damages[1]+self.damage_range_add[1]]
-			attacker_character.weapon.damage_range=new_damages
-			state_of_attack=plain_attack(attacker_character,defender_character)
-			attacker_character.weapon.damage_range=normal_damages
-			return state_of_attack
+		elif type_of_weapon!=None:
+			if type_of_weapon!=attacker_character.weapon.range:
+				return " wrong weapon"
+		attacker_character.stamina_points-=self.stamina_required
+		normal_damages=attacker_character.weapon.damage_range
+		new_damages=[normal_damages[0]+self.damage_range_add[0],normal_damages[1]+self.damage_range_add[1]]
+		attacker_character.weapon.damage_range=new_damages
+		state_of_attack=plain_attack(attacker_character,defender_character)
+		attacker_character.weapon.damage_range=normal_damages
+		return state_of_attack
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """								""""""list of Spells""""""                             """
 fireflamme=Spell('fire flamme',15,8,[12,15],2)
@@ -102,6 +105,7 @@ lightbolt=Spell('light bolt',20,15,[18,22],5)
 lightnings=Spell('lightnings',20,20,[28,32],8)
 frost=Spell('frost',8,10,[14,18],3)
 iceprison=Spell('ice prison',5,25,[30,38],8)
+
 """"""""""""""""""""""""""""""""""""
 firstaid=Healing_spell('first aid',5,8,15,2)
 firstaid_extended=Healing_spell('first aid extended',15,113,15,2)
@@ -112,6 +116,7 @@ restoration_extended=Healing_spell('restoration extended',5,30,80,7)
 
 """"""""""""""""""""""""""""""""""""
 type_of_spells=['fire','electricity','ice']
+
 """"""""""""""""""""""""""""""""""""
 spells={'fire':[fireflamme,fireball,firemeteor],
 		'electricity':[shock,lightbolt,lightnings],
@@ -119,4 +124,27 @@ spells={'fire':[fireflamme,fireball,firemeteor],
 		'healing':[firstaid,firstaid_extended,healing,healing_extended,restoration,restoration_extended]}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """						""""""list of Alternative Attacks""""""                         """
+jump=Alternative_attack('jump attack',5,2,[5,5],'mele',1,0,1)
+doublejump=Alternative_attack('double jump',10,3,[5,5],'mele',2,1,3)
+triplejump=Alternative_attack('triple jump',15,4,[5,5],'mele',3,2,4)
+leap_of_faith=Alternative_attack('leap of faith',15,6,[10,10],'mele',5,3,6)
+blow=Alternative_attack('weapon blow',1,1,[3,6],2,0,0)
+strongblow=Alternative_attack('strong blow',1,2,[5,8],4,1,1)
+powerfulblow=Alternative_attack('powerful blow',1,3,[8,10],6,2,3)
+fire_ignition=Alternative_attack('fire ignition',25,2,[3,4],None,0,2,1)
+piercing_arrows=Alternative_attack('piercing arrows',25,2,[3,3],0,1,0)
+long_range_arrows=Alternative_attack('long-range arrows',40,4,[4,4],2,4,1)
+
+""""""""""""""""""""""""""""""""""""
+type_of_attacks=['jump','mele blow','essence','arrows']
+
+""""""""""""""""""""""""""""""""""""
+alternative_attacks={'jump':[jump,doublejump,triplejump,leap_of_faith],
+					'mele blow':[blow,strongblow,powerfulblow],
+					'essence':[fire_ignition],
+					'arrows':[piercing_arrows,long_range_arrows]}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

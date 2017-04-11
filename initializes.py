@@ -235,10 +235,13 @@ def create_consumable(consumable_type=None,side_effect=None):
 def create_set_of_spells(character,number_of_spells=None,category_of_spells=None):
 	if number_of_spells==None:
 		number_of_spells=random.randint(0,3)
-	for spells_left in range(number_of_spells,0,-1):
+	spells_left=0
+	while spells_left <number_of_spells:
 		if category_of_spells==None:
 			no_category=True
 			category_of_spells=fights.type_of_spells[random.randint(0,len(fights.type_of_spells)-1)]
+		else:
+			no_category=False
 		new_spells=copy.deepcopy(fights.spells[category_of_spells])
 		number_spells_initial=len(character.list_of_spells)
 		new_spell_index=0
@@ -251,6 +254,8 @@ def create_set_of_spells(character,number_of_spells=None,category_of_spells=None
 			new_spell_index+=1
 		if no_category:
 			category_of_spells=None
+		spells_left+=1
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
