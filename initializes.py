@@ -37,8 +37,6 @@ def create_foe(foe_name,level=None):
 	max_life_points=50+25*abilities[0]
 	max_mana_points=20+10*abilities[4]
 	max_stamina_points=10+2*abilities[2]
-	non_space=True
-	number=0
 	foe_name=foe_name.split()
 	name=foe_name[0]
 	#  let's now create the instance
@@ -110,9 +108,11 @@ def create_foe(foe_name,level=None):
 
 def create_armour(category_of_armour=None,type_of_armour=None):
 	if category_of_armour==None:
+		category_of_armours=("light","medium","heavy")
 		choice_of_category=random.randint(0,len(category_of_armours)-1)
 		category_of_armour=category_of_armours[choice_of_category]
 	if type_of_armour==None:
+		type_of_armours=("head","arm","torso","leg","foot")
 		choice_of_type=random.randint(0,len(type_of_armours)-1)
 		type_of_armour=type_of_armours[choice_of_type]
 	armour_key="{} {}".format(category_of_armour,type_of_armour)
@@ -136,9 +136,11 @@ def create_armour(category_of_armour=None,type_of_armour=None):
 
 def create_weapon(category_of_weapon=None,range_of_weapon=None):
 	if category_of_weapon==None:
-		choice_of_category=random.randint(0,len(category_of_armours)-1)
-		category_of_weapon=category_of_armours[choice_of_category]
+		category_of_weapons=("light","medium","heavy")
+		choice_of_category=random.randint(0,len(category_of_weapons)-1)
+		category_of_weapon=category_of_weapons[choice_of_category]
 	if range_of_weapon==None:
+		range_of_weapons=['mele','distance']
 		choice_of_range=random.randint(0,len(range_of_weapons)-1)
 		range_of_weapon=range_of_weapons[choice_of_range]
 	weapon_key="{} {}".format(category_of_weapon,range_of_weapon)
@@ -229,20 +231,16 @@ def create_consumable(consumable_type=None,side_effect=None):
 		name=foods[random.randint(0,len(foods)-1)]
 		return objects.Food(name,weight,life_points_gained,side_effect)
 
-
-"""foes={name:level_range,abilitity_ranges}"""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+					"""foes={name:level_range,abilitity_ranges}"""
 foes={"ogre low level":([1,3],[[2,5],[1,4],[1,5],[0,2],[0,2],[0,3]]),
 		"ogre medium level":([4,7],[[4,8],[4,7],[3,6],[2,4],[2,4],[1,5]])}
 
-
-type_of_armours=("head","arm","torso","leg","foot")
-category_of_armours=("light","medium","heavy")
-range_of_weapons=['mele','distance']
-
-"""armours={'category type':[
-							(name1,weight1,protection_range1),
-							(name2,weight2,protection_range2)
-							]}"""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+				"""armours={'category type':[
+											(name1,weight1,protection_range1),
+											(name2,weight2,protection_range2)
+											]}"""
 armours={'heavy head':[
 				("iron helmet",2,[5,10]),
 				("bronze helmet",2.5,[8,12])
@@ -292,11 +290,11 @@ armours={'heavy head':[
 				('textile boots',0.5,[3,6])
 				]}
 
-
-"""weapons={'category type':[
-				('name1',weight1,[attack_min_range1,attack_max_range1]),
-				('name2',weight2,[attack_min_range2,attack_max_range2])
-				]}"""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+				"""weapons={'category type':[
+								('name1',weight1,[attack_min_range1,attack_max_range1]),
+								('name2',weight2,[attack_min_range2,attack_max_range2])
+								]}"""
 weapons={'heavy mele':[
 				('adamantium axe',6,[[23,26],[27,30]]),
 				('adamantium sword',5,[[21,24],[24,28]])
@@ -320,6 +318,7 @@ weapons={'heavy mele':[
 				('orm bow',1.75,[[4,7],[8,10]])
 				]}
 
-"""foods=[food_name1,food_name2,...]"""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+					"""foods=[food_name1,food_name2,...]"""
 foods=['cream pie','beef rost','ratatouille','pancakes','fruit salad',
 		'ceasar salad']
