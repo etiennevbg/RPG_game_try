@@ -1,5 +1,6 @@
 import characters
 import objects
+import fights
 import random
 import copy
 
@@ -230,6 +231,27 @@ def create_consumable(consumable_type=None,side_effect=None):
 															effect_chosen,number_of_rounds)
 		name=foods[random.randint(0,len(foods)-1)]
 		return objects.Food(name,weight,life_points_gained,side_effect)
+
+def create_set_of_spells(character,number_of_spells=None,category_of_spells=None):
+	if number_of_spells==None:
+		number_of_spells=random.randint(0,3)
+	for spells_left in range(number_of_spells,0,-1):
+		if category_of_spells==None:
+			no_category=True
+			category_of_spells=fights.type_of_spells[random.randint(0,len(fights.type_of_spells)-1)]
+		new_spells=copy.deepcopy(fights.spells[category_of_spells])
+		number_spells_initial=len(character.list_of_spells)
+		new_spell_index=0
+		while len(character.list_of_spells)==number_spells_initial:
+			if new_spell_index==len(new_spells):
+				spells_left-=1
+				category_of_spells=None
+				break
+			character.add_spell(new_spells[new_spell_index])
+			new_spell_index+=1
+		if no_category:
+			category_of_spells=None
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""foes={name:level_range,abilitity_ranges}"""

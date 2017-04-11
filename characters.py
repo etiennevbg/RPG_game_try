@@ -61,11 +61,15 @@ class Skills():
 		self.list_of_spells=[]
 		self.list_of_attacks=[]
 	def add_spell(self,spell):
-		if not spell in self.list_of_spells:
-			self.list_of_spells.append(spell)
+		for increment in range(len(self.list_of_spells)):
+			if self.list_of_spells[increment].name==spell.name :
+				return None
+		self.list_of_spells.append(spell)
 	def add_attack(self,alternative_attack):
-		if not alternative_attack in self.list_of_attacks:
-			list_of_attacks.append(alternative_attack)
+		for increment in range(len(self.list_of_attacks)):
+			if self.list_of_attacks[increment].name==alternative_attack.name :
+				return None
+		list_of_attacks.append(alternative_attack)
 
 class Character(Ability,Equipment,Skills):
 	def __init__ (self,name,life_points,max_life_points,mana_points,max_mana_points,
