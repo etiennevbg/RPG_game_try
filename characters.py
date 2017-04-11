@@ -76,8 +76,29 @@ class Skills():
 			if self.list_of_attacks[increment].name==alternative_attack.name :
 				return None
 		self.list_of_attacks.append(alternative_attack)
+	def show_skills(self):
+		return(self.list_of_spells,self.list_of_healing_spells,self.list_of_attacks)
 
-class Character(Ability,Equipment,Skills):
+from math import sqrt
+class Position():
+	def __init__(self,x=0,y=0,speed=2):
+		self.x=x
+		self.y=y
+		self.speed=speed
+	def go_to(self,x,y):
+		distance_to_run=sqrt((x-self.x)**2+(y-self.y)**2)
+		if distance_to_run<1:
+			return "destination reached"
+		else:
+			new_x=speed*(x-self.x)/distance_to_run
+			new_y=speed*(y-self.y)/distance_to_run
+			self.x=int(new_x)
+			self.y=int(new_y)
+	def set_to_position(self,x,y):
+		self.x=x
+		self.y=y
+
+class Character(Ability,Equipment,Skills,Position):
 	def __init__ (self,name,life_points,max_life_points,mana_points,max_mana_points,
 					stamina_points,max_stamina_points,experience,level,style):
 		self.name=name
@@ -95,6 +116,7 @@ class Character(Ability,Equipment,Skills):
 		Ability.__init__(self)
 		Equipment.__init__(self)
 		Skills.__init__(self)
+		Position.__init__(self)
 	def __repr__(self):
 		return self.name
 
@@ -140,6 +162,8 @@ class Foe(Character):
 			self.drop(self.inventory[j])
 			iterable+=1
 		return (self.gold,loots)
+	def distance_to_foe(self,character):
+		return int(sqrt((self.x-character.x)**2+(self.y-character.y)**2))
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
