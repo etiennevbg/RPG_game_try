@@ -59,12 +59,18 @@ class Equipment():
 class Skills():
 	def __init__(self):
 		self.list_of_spells=[]
+		self.list_of_healing_spells=[]
 		self.list_of_attacks=[]
 	def add_spell(self,spell):
 		for increment in range(len(self.list_of_spells)):
 			if self.list_of_spells[increment].name==spell.name :
 				return None
 		self.list_of_spells.append(spell)
+	def add_healing_spell(self,healing_spell):
+		for increment in range(len(self.list_of_healing_spells)):
+			if self.list_of_healing_spells[increment].name==healing_spell.name :
+				return None
+		self.list_of_healing_spells.append(healing_spell)
 	def add_attack(self,alternative_attack):
 		for increment in range(len(self.list_of_attacks)):
 			if self.list_of_attacks[increment].name==alternative_attack.name :

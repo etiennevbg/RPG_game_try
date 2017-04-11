@@ -105,6 +105,22 @@ def create_foe(foe_name,level=None):
 		else:
 			new_object=create_consumable()
 			foe.add_in_inventory(new_object)
+	#  let's add the set of skills and attacks of this foe
+	if foe_name[1]=='low':
+		number_of_healing_spells=random.randint(0,1)
+	elif foe_name[1]=='medium':
+		create_set_of_attacks(foe)
+		create_set_of_spells(foe)
+		number_of_healing_spells=random.randint(0,3)
+	elif foe_name[1]=='high':
+		create_set_of_attacks(foe)
+		create_set_of_attacks(foe)
+		create_set_of_spells(foe)
+		create_set_of_spells(foe)
+		number_of_healing_spells=random.randint(0,5)
+	create_set_of_attacks(foe)
+	create_set_of_spells(foe)
+	create_set_of_spells(foe,number_of_healing_spells,'healing')
 	return foe
 
 def create_armour(category_of_armour=None,type_of_armour=None):
@@ -245,20 +261,24 @@ def create_set_of_spells(character,number_of_spells=None,category_of_spells=None
 		new_spells=copy.deepcopy(fights.spells[category_of_spells])
 		number_spells_initial=len(character.list_of_spells)
 		new_spell_index=0
-		while len(character.list_of_spells)==number_spells_initial:
-			if new_spell_index==len(new_spells):
-				spells_left-=1
-				category_of_spells=None
-				break
-			character.add_spell(new_spells[new_spell_index])
-			new_spell_index+=1
+		if category_of_spells=='healing':
+			for increment in range(number_of_spells):
+				character.add_healing_spell(new_spells[increment])
+		else:
+			while len(character.list_of_spells)==number_spells_initial:
+				if new_spell_index==len(new_spells):
+					spells_left-=1
+					category_of_spells=None
+					break
+				character.add_spell(new_spells[new_spell_index])
+				new_spell_index+=1
 		if no_category:
 			category_of_spells=None
 		spells_left+=1
 
 def create_set_of_attacks(character,number_of_attacks=None,category_of_attacks=None):
 	if number_of_attacks==None:
-		number_of_attacks=random.randint(0,4)
+		number_of_attacks=random.randint(0,3)
 	attacks_left=0
 	while attacks_left <number_of_attacks:
 		if category_of_attacks==None:

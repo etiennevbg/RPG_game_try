@@ -39,7 +39,7 @@ class Spell(Special_attack):
 	def use_spell(self,attacker_character,defender_character):
 		if attacker_character.mana_points<self.mana_required:
 			return "mana too low"
-		if attacker_character.intelligence<intelligence_min:
+		if attacker_character.intelligence<self.intelligence_min:
 			return "intelligence too low"
 		else:
 			attacker_character.lose_mana(self.mana_required)
@@ -56,7 +56,7 @@ class Healing_spell(Spell):
 	def use_spell(self,launcher_character,receiver_character):
 		if launcher_character.mana_points<self.mana_required:
 			return "mana too low"
-		if launcher_character.intelligence<intelligence_min:
+		if launcher_character.intelligence<self.intelligence_min:
 			return "intelligence too low"
 		else:
 			life_points_restored=int(self.life_points_gained*0.75*(launcher_character.intelligence+1))
@@ -73,6 +73,7 @@ class Alternative_attack(Special_attack):
 		self.strength_min=strength_min
 		self.agility_min=agility_min
 		self.endurance_min=endurance_min
+		self.type_of_weapon=type_of_weapon
 	def attack(self,attacker_character,defender_character):
 		if self.strength_min>attacker_character.strength:
 			return "strength too low"
@@ -82,9 +83,9 @@ class Alternative_attack(Special_attack):
 			return "endurance too low"
 		elif self.stamina_required>attacker_character.stamina_points:
 			return "stamina too low"
-		elif type_of_weapon!=None:
-			if type_of_weapon!=attacker_character.weapon.range:
-				return " wrong weapon"
+		elif self.type_of_weapon!=None:
+			if self.type_of_weapon!=attacker_character.weapon.range:
+				return "wrong weapon"
 		attacker_character.stamina_points-=self.stamina_required
 		normal_damages=attacker_character.weapon.damage_range
 		new_damages=[normal_damages[0]+self.damage_range_add[0],normal_damages[1]+self.damage_range_add[1]]
@@ -107,12 +108,12 @@ frost=Spell('frost',8,10,[14,18],3)
 iceprison=Spell('ice prison',5,25,[30,38],8)
 
 """"""""""""""""""""""""""""""""""""
-firstaid=Healing_spell('first aid',5,8,15,2)
-firstaid_extended=Healing_spell('first aid extended',15,113,15,2)
-healing=Healing_spell('healing',5,15,40,4)
-healing_extended=Healing_spell('healing extended',15,20,40,4)
-restoration=Healing_spell('restoration',5,25,80,7)
-restoration_extended=Healing_spell('restoration extended',5,30,80,7)
+firstaid=Healing_spell('first aid',5,8,30,2)
+firstaid_extended=Healing_spell('first aid extended',15,13,30,2)
+healing=Healing_spell('healing',5,15,70,4)
+healing_extended=Healing_spell('healing extended',15,20,70,4)
+restoration=Healing_spell('restoration',5,25,130,7)
+restoration_extended=Healing_spell('restoration extended',5,30,130,7)
 
 """"""""""""""""""""""""""""""""""""
 type_of_spells=['fire','electricity','ice']
