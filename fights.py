@@ -21,6 +21,8 @@ def plain_attack(attacker_character,defender_character):
 	if distance_foes>attacker_character.weapon.range:
 		return 'distance too great'
 	damaged_dealt=int(random.randint(damage[0],damage[1])*1.25*(attacker_character.strength+1)-defender_character.body_protection)
+	if damaged_dealt<1:
+		damaged_dealt=1
 	chance_to_touch=1-0.05*defender_character.agility+0.025*attacker_character.agility
 	success=chance_to_touch>random.random()
 	if success:
@@ -140,6 +142,115 @@ def begin_fight(foe,main_character):
 			break
 		return response
 	return "undetected"
+
+def keep_fighting(foe,main_character):
+	inventory=foe.show_inventory()
+	no_action=True
+	response=""
+	while no_action:
+		if foe.life_points<0.25*foe.max_life_points:
+			for potion in inventory:
+				name_of_potion=potion.name.split()
+				try:
+					name0,name1=name_of_potion[0],name_of_potion[1]
+					if "{} {}".format(name0,name1)=="health potion":
+						potion.use(foe)
+						response="{} uses the {}".format(foe,potion)
+						break
+				except:
+					pass
+		if response!="":
+			break
+		if foe.life_points<0.5*foe.max_life_points:
+			for food in inventory:
+				try:
+					side_effect=food.side_effect
+					food.eat(foe)
+					response="{} eats {}, restore {} health points and {}".format(foe,food,food.life_points_gained,food.side_effect)
+				except:
+					pass
+		if response!="":
+			break
+		if foe.mana_points<0.2*foe.max_mana_points:
+			for potion in inventory:
+				name_of_potion=potion.name.split()
+				try:
+					name0,name1=name_of_potion[0],name_of_potion[1]
+					if "{} {}".format(name0,name1)=="mana potion":
+						potion.use(foe)
+						response="{} uses the {}".format(foe,potion)
+						break
+				except:
+					pass
+		if response!="":
+			break
+		if foe.stamina_points<2:
+			for potion in inventory:
+				name_of_potion=potion.name.split()
+				try:
+					name0,name1=name_of_potion[0],name_of_potion[1]
+					if "{} {}".format(name0,name1)=="stamina potion":
+						potion.use(foe)
+						response="{} uses the {}".format(foe,potion)
+						break
+				except:
+					pass
+		if response!="":
+			break
+		choice_of_attack=random.randint(1,12)
+		foe_skills=foe.show_skills()
+		distance_main_character=foe.distance_to_foe(main_character)
+		if foe.life_points<0.25*foe.max_life_points:
+			if foe_skills[1]!=[]:
+				for increment in range(len(foe_skills[1])-1,0,-1):
+					healing_spell=foe_skills[1][increment]
+					result=healing_spell.use_spell(foe,foe)
+					if result==None :
+						response="{} used {} to restore {} health points".format(foe,healing_spell,healing_spell.life_points_gained)
+						break
+		if response!="":
+			break
+		if choice_of_attack==1 or choice_of_attack==2 or choice_of_attack==3:
+			if foe_skills[2]!=[]:
+				for increment in range(len(foe_skills[2])):
+					special_attack=foe_skills[2][increment]
+					if special_attack.distance>distance_main_character:
+						life_points_of_character_initial=main_character.life_points
+						result=special_attack.attack(foe,main_character)
+						life_points_of_character_final=main_character.life_points
+						if result==None or result=="miss" or result=="death":
+							damage_dealt=life_points_of_character_initial-life_points_of_character_final
+							response="{} attacked {} with {} and dealt {} damages".format(foe,main_character,special_attack,damage_dealt)
+							break
+		if response!="":
+			break
+		if choice_of_attack==4 or choice_of_attack==5:
+			if foe_skills[0]!=[]:
+				for increment in range(len(foe_skills[0])):
+					spell=foe_skills[0][increment]
+					if spell.distance>distance_main_character:
+						life_points_of_character_initial=main_character.life_points
+						result=spell.use_spell(foe,main_character)
+						life_points_of_character_final=main_character.life_points
+						if result==None or result=="death":
+							damage_dealt=life_points_of_character_initial-life_points_of_character_final
+							response="{} attacked {} with {} and dealt {} damages".format(foe,main_character,spell,damage_dealt)
+							break
+		if response!="":
+			break
+		life_points_of_character_initial=main_character.life_points
+		attack=plain_attack(foe,main_character)
+		life_points_of_character_final=main_character.life_points
+		if attack!="distance too great":
+			damage_dealt=life_points_of_character_initial-life_points_of_character_final
+			response="{} attacked {} with {} and dealt {} damages".format(foe,main_character,foe.weapon,damage_dealt)
+			break
+		foe.go_to(main_character.x,main_character.y)
+		response="{} gets closer to {}".format(foe,main_character)
+		break
+	return response					
+
+
 
 
 

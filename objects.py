@@ -246,7 +246,7 @@ weapons={'heavy mele':[
 				('adamantium sword',5,[[21,24],[24,28]])
 				],
 			'medium mele':[
-				('iron sword',3,[[14,18],[18,22]])
+				('iron sword',3,[[12,14],[16,20]])
 				],
 			'light mele':[
 				('iron dagger',1.5,[[8,10],[10,12]]),

@@ -35,8 +35,8 @@ def create_foe(foe_name,level=None):
 		caracterisation_foe[1][increment]=value_for_this_ability
 	abilities=caracterisation_foe[1]
 	#  add other characteristics
-	max_life_points=50+25*abilities[0]
-	max_mana_points=20+10*abilities[4]
+	max_life_points=100+15*abilities[0]
+	max_mana_points=20+6*abilities[4]
 	max_stamina_points=10+2*abilities[2]
 	foe_name=foe_name.split()
 	name=foe_name[0]

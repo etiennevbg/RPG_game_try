@@ -139,7 +139,8 @@ class Character(Ability,Equipment,Skills,Position):
 	def level_up(self, nbr=1):
 		self.level+=nbr
 	def die(self):
-		return "death"
+		if self.life_points<=0:
+			return "death"
 
 import random
 class Foe(Character):
