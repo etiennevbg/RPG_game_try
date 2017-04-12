@@ -1,4 +1,6 @@
-#  Creation of the system of fights
+"""  Creation of the system of fights   """
+
+"""Definition of classes for attacks and fight skills"""
 
 import characters
 import objects
@@ -12,6 +14,12 @@ def plain_attack(attacker_character,defender_character):
 		hands=objects.Weapon("bare hands",0,0.75,[3,5],None)
 		attacker_character.weapon=hands
 		damage=attacker_character.weapon.damage_range
+	try :
+		distance_foes=attacker_character.distance_to_foe(defender_character)
+	except:
+		distance_foes=defender_character.distance_to_foe(attacker_character)
+	if distance_foes>attacker_character.weapon.range:
+		return 'distance too great'
 	damaged_dealt=int(random.randint(damage[0],damage[1])*1.25*(attacker_character.strength+1)-defender_character.body_protection)
 	chance_to_touch=1-0.05*defender_character.agility+0.025*attacker_character.agility
 	success=chance_to_touch>random.random()
@@ -93,6 +101,46 @@ class Alternative_attack(Special_attack):
 		state_of_attack=plain_attack(attacker_character,defender_character)
 		attacker_character.weapon.damage_range=normal_damages
 		return state_of_attack
+
+"""Beginning of fights with foes"""
+
+def begin_fight(foe,main_character):
+	if foe.detection_of_foe(main_character)=="detected":
+		distance_main_character=foe.distance_to_foe(main_character)
+		non_attacked=True
+		foe_skills=foe.show_skills()
+		response=""
+		while non_attacked:
+			if foe_skills[2]!=[]:
+				for increment in range(len(foe_skills[2])):
+					special_attack=foe_skills[2][increment]
+					if special_attack.distance>distance_main_character:
+						result=special_attack.attack(foe,main_character)
+						if result==None or result=="miss" or result=="death":
+							response="{} attacked {} with {}".format(foe,main_character,special_attack)
+							break
+			if response!="":
+				break
+			if foe_skills[0]!=[]:
+				for increment in range(len(foe_skills[0])):
+					spell=foe_skills[0][increment]
+					if spell.distance>distance_main_character:
+						result=spell.use_spell(foe,main_character)
+						if result==None or result=="death":
+							response="{} attacked {} with {}".format(foe,main_character,spell)
+							break
+			if response!="":
+				break
+			attack=plain_attack(foe,main_character)
+			if attack!="distance too great":
+				response="{} attacked {} with {}".format(foe,main_character,foe.weapon)
+				break
+			foe.go_to(main_character.x,main_character.y)
+			response="{} gets closer to {}".format(foe,main_character)
+			break
+		return response
+	return "undetected"
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

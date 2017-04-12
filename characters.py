@@ -81,7 +81,7 @@ class Skills():
 
 from math import sqrt
 class Position():
-	def __init__(self,x=0,y=0,speed=2):
+	def __init__(self,x=0,y=0,speed=1):
 		self.x=x
 		self.y=y
 		self.speed=speed
@@ -90,10 +90,10 @@ class Position():
 		if distance_to_run<1:
 			return "destination reached"
 		else:
-			new_x=speed*(x-self.x)/distance_to_run
-			new_y=speed*(y-self.y)/distance_to_run
-			self.x=new_x
-			self.y=new_y
+			new_x=self.speed*(x-self.x)/float(distance_to_run)
+			new_y=self.speed*(y-self.y)/float(distance_to_run)
+			self.x+=new_x
+			self.y+=new_y
 	def set_to_position(self,x,y):
 		self.x=x
 		self.y=y
@@ -177,7 +177,7 @@ class Foe(Character):
 						element_of_non_detection*=(distance_foe-detection_chance[j][1])/float(detection_chance[i][1]-detection_chance[j][1])
 				detected+=detection_chance[i][0]*element_of_non_detection
 			probability_of_non_detection=random.random()
-			if detected<probability_of_non_detection:
+			if detected>probability_of_non_detection:
 				return "detected"
 
 
