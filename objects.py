@@ -55,6 +55,7 @@ class Potion(Object):
 			character.mana_points=character.max_mana_points
 		if character.stamina_points >character.max_stamina_points:
 			character.stamina_points=character.max_stamina_points
+		character.drop(self)
 
 
 class Armour(Object):
@@ -115,9 +116,8 @@ class Food(Potion):
 		self.side_effect=side_effect
 		self.duration_of_effect=-1
 	def eat(self,character):
-		self.use(character)
 		if self.side_effect==None:
-			return None
+			pass
 		else:
 			effect=self.side_effect.split()
 			#  the type of side_effect will be a string written
@@ -148,6 +148,7 @@ class Food(Potion):
 			if effect[2]=='max_stamina_points':
 				character.max_stamina_points+=value
 				character.stamina_points+=value
+		self.use(character)
 	def end_effect(self,character):
 		self.duration_of_effect-=1
 		if self.duration_of_effect>0:
@@ -251,7 +252,7 @@ weapons={'heavy mele':[
 			'light mele':[
 				('iron dagger',1.5,[[8,10],[10,12]]),
 				('wood staff',2,[[4,6],[13,15]]),
-				('knuckles',1,[[3,6],[6,8]])
+				('knuckles',1,[[5,6],[6,8]])
 				],
 			'heavy distance':[
 				('artillery',5,[[18,22],[22,25]])
@@ -261,7 +262,7 @@ weapons={'heavy mele':[
 				('magic staff',2.5,[[7,9],[13,16]])
 				],
 			'light distance':[
-				('orm bow',1.75,[[4,7],[8,10]])
+				('orm bow',1.75,[[6,7],[8,10]])
 				]}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

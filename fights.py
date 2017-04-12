@@ -20,10 +20,10 @@ def plain_attack(attacker_character,defender_character):
 		distance_foes=defender_character.distance_to_foe(attacker_character)
 	if distance_foes>attacker_character.weapon.range:
 		return 'distance too great'
-	damaged_dealt=int(random.randint(damage[0],damage[1])*1.25*(attacker_character.strength+1)-defender_character.body_protection)
+	damaged_dealt=int(random.randint(damage[0],damage[1])*(1+0.5*(attacker_character.strength))-0.4*defender_character.body_protection)
 	if damaged_dealt<1:
 		damaged_dealt=1
-	chance_to_touch=1-0.05*defender_character.agility+0.025*attacker_character.agility
+	chance_to_touch=1-0.01*defender_character.agility+0.005*attacker_character.agility
 	success=chance_to_touch>random.random()
 	if success:
 		defender_character.lose_lp(damaged_dealt)
@@ -53,7 +53,7 @@ class Spell(Special_attack):
 			return "intelligence too low"
 		else:
 			attacker_character.lose_mana(self.mana_required)
-			damaged_dealt=int(random.randint(self.damage_range[0],self.damage_range[1])*1.25*(attacker_character.intelligence+1)-(defender_character.will+1)*1.5)
+			damaged_dealt=int(random.randint(self.damage_range[0],self.damage_range[1])*(1+0.2*attacker_character.intelligence)-(defender_character.will+1)*1.5)
 			defender_character.lose_lp(damaged_dealt)
 			if defender_character.life_points<=0:
 				death=defender_character.die()
@@ -155,22 +155,21 @@ def keep_fighting(foe,main_character):
 					name0,name1=name_of_potion[0],name_of_potion[1]
 					if "{} {}".format(name0,name1)=="health potion":
 						potion.use(foe)
+						inventory=foe.show_inventory()
 						response="{} uses the {}".format(foe,potion)
-						break
+						return response
 				except:
 					pass
-		if response!="":
-			break
 		if foe.life_points<0.5*foe.max_life_points:
 			for food in inventory:
 				try:
 					side_effect=food.side_effect
 					food.eat(foe)
+					inventory=foe.show_inventory()
 					response="{} eats {}, restore {} health points and {}".format(foe,food,food.life_points_gained,food.side_effect)
+					return response
 				except:
 					pass
-		if response!="":
-			break
 		if foe.mana_points<0.2*foe.max_mana_points:
 			for potion in inventory:
 				name_of_potion=potion.name.split()
@@ -178,12 +177,11 @@ def keep_fighting(foe,main_character):
 					name0,name1=name_of_potion[0],name_of_potion[1]
 					if "{} {}".format(name0,name1)=="mana potion":
 						potion.use(foe)
+						inventory=foe.show_inventory()
 						response="{} uses the {}".format(foe,potion)
-						break
+						return response
 				except:
 					pass
-		if response!="":
-			break
 		if foe.stamina_points<2:
 			for potion in inventory:
 				name_of_potion=potion.name.split()
@@ -191,12 +189,11 @@ def keep_fighting(foe,main_character):
 					name0,name1=name_of_potion[0],name_of_potion[1]
 					if "{} {}".format(name0,name1)=="stamina potion":
 						potion.use(foe)
+						inventory=foe.show_inventory()
 						response="{} uses the {}".format(foe,potion)
-						break
+						return response
 				except:
 					pass
-		if response!="":
-			break
 		choice_of_attack=random.randint(1,12)
 		foe_skills=foe.show_skills()
 		distance_main_character=foe.distance_to_foe(main_character)
@@ -207,9 +204,7 @@ def keep_fighting(foe,main_character):
 					result=healing_spell.use_spell(foe,foe)
 					if result==None :
 						response="{} used {} to restore {} health points".format(foe,healing_spell,healing_spell.life_points_gained)
-						break
-		if response!="":
-			break
+						return response
 		if choice_of_attack==1 or choice_of_attack==2 or choice_of_attack==3:
 			if foe_skills[2]!=[]:
 				for increment in range(len(foe_skills[2])):
@@ -221,9 +216,7 @@ def keep_fighting(foe,main_character):
 						if result==None or result=="miss" or result=="death":
 							damage_dealt=life_points_of_character_initial-life_points_of_character_final
 							response="{} attacked {} with {} and dealt {} damages".format(foe,main_character,special_attack,damage_dealt)
-							break
-		if response!="":
-			break
+							return response
 		if choice_of_attack==4 or choice_of_attack==5:
 			if foe_skills[0]!=[]:
 				for increment in range(len(foe_skills[0])):
@@ -235,20 +228,18 @@ def keep_fighting(foe,main_character):
 						if result==None or result=="death":
 							damage_dealt=life_points_of_character_initial-life_points_of_character_final
 							response="{} attacked {} with {} and dealt {} damages".format(foe,main_character,spell,damage_dealt)
-							break
-		if response!="":
-			break
+							return response
 		life_points_of_character_initial=main_character.life_points
 		attack=plain_attack(foe,main_character)
 		life_points_of_character_final=main_character.life_points
 		if attack!="distance too great":
 			damage_dealt=life_points_of_character_initial-life_points_of_character_final
 			response="{} attacked {} with {} and dealt {} damages".format(foe,main_character,foe.weapon,damage_dealt)
-			break
+			return response
 		foe.go_to(main_character.x,main_character.y)
 		response="{} gets closer to {}".format(foe,main_character)
-		break
-	return response					
+		return response
+	return response		
 
 
 

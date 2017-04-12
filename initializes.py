@@ -56,7 +56,17 @@ def create_foe(foe_name,level=None):
 		category_of_foe='medium'
 	elif foe_name[1]=='high':
 		category_of_foe='heavy'
-	number_elements_of_armour=random.randint(1,5)
+	choice_of_elements=random.randint(1,22)
+	if choice_of_elements<2:
+		number_elements_of_armour=1
+	elif choice_of_elements<5:
+		number_elements_of_armour=2
+	elif choice_of_elements<14:
+		number_elements_of_armour=3
+	elif choice_of_elements<20:
+		number_elements_of_armour=4
+	else:
+		number_elements_of_armour=5
 	while True:
 		torso_equipment=create_armour(category_of_foe,'torso')
 		foe.add_in_inventory(torso_equipment)

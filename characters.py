@@ -169,7 +169,7 @@ class Foe(Character):
 		distance_foe=self.distance_to_foe(main_character)
 		if distance_foe<30:
 			"""detection_chance=[[proba1,distance1],[proba2,distance2]...]"""
-			detection_chance=[[0.9,5],[0.7,10],[0.45,15],[0.20,20],[0.05,25]]
+			detection_chance=[[0.9,5],[0.5,10],[0.25,15],[0.1,20],[0.01,25]]
 			detected=0
 			for i in range(len(detection_chance)):
 				element_of_non_detection=1
@@ -185,6 +185,7 @@ class Foe(Character):
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""foes={name:level_range,abilitity_ranges}"""
 foes={"ogre low level":([1,3],[[2,5],[1,4],[1,5],[0,2],[0,2],[0,3]]),
-		"ogre medium level":([4,7],[[4,8],[4,7],[3,6],[2,4],[2,4],[1,5]])}
+		"ogre medium level":([4,7],[[4,8],[4,7],[3,6],[2,4],[2,4],[1,5]]),
+		"spider low level":([1,3],[[1,4],[2,5],[1,5],[0,1],[0,3],[0,3]])}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
