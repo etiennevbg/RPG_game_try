@@ -151,49 +151,30 @@ def keep_fighting(foe,main_character):
 		if foe.life_points<0.25*foe.max_life_points:
 			for potion in inventory:
 				name_of_potion=potion.name.split()
-				try:
-					name0,name1=name_of_potion[0],name_of_potion[1]
-					if "{} {}".format(name0,name1)=="health potion":
-						potion.use(foe)
-						inventory=foe.show_inventory()
-						response="{} uses the {}".format(foe,potion)
-						return response
-				except:
-					pass
+				if name_of_potion[0]=='health':
+					potion.use(foe)
+					response="{} uses the {}".format(foe,potion)
+					return response
 		if foe.life_points<0.5*foe.max_life_points:
 			for food in inventory:
-				try:
-					side_effect=food.side_effect
+				if food in objects.foods:
 					food.eat(foe)
-					inventory=foe.show_inventory()
 					response="{} eats {}, restore {} health points and {}".format(foe,food,food.life_points_gained,food.side_effect)
 					return response
-				except:
-					pass
 		if foe.mana_points<0.2*foe.max_mana_points:
 			for potion in inventory:
 				name_of_potion=potion.name.split()
-				try:
-					name0,name1=name_of_potion[0],name_of_potion[1]
-					if "{} {}".format(name0,name1)=="mana potion":
-						potion.use(foe)
-						inventory=foe.show_inventory()
-						response="{} uses the {}".format(foe,potion)
-						return response
-				except:
-					pass
+				if name_of_potion[0]=='mana':
+					potion.use(foe)
+					response="{} uses the {}".format(foe,potion)
+					return response
 		if foe.stamina_points<2:
 			for potion in inventory:
 				name_of_potion=potion.name.split()
-				try:
-					name0,name1=name_of_potion[0],name_of_potion[1]
-					if "{} {}".format(name0,name1)=="stamina potion":
-						potion.use(foe)
-						inventory=foe.show_inventory()
-						response="{} uses the {}".format(foe,potion)
-						return response
-				except:
-					pass
+				if name_of_potion[0]=='stamina':
+					potion.use(foe)
+					response="{} uses the {}".format(foe,potion)
+					return response
 		choice_of_attack=random.randint(1,12)
 		foe_skills=foe.show_skills()
 		distance_main_character=foe.distance_to_foe(main_character)
