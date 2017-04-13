@@ -14,10 +14,7 @@ def plain_attack(attacker_character,defender_character):
 		hands=objects.Weapon("bare hands",0,0.75,[3,5],None)
 		attacker_character.weapon=hands
 		damage=attacker_character.weapon.damage_range
-	try :
-		distance_foes=attacker_character.distance_to_foe(defender_character)
-	except:
-		distance_foes=defender_character.distance_to_foe(attacker_character)
+	distance_foes=attacker_character.distance_to_instance(defender_character)
 	if distance_foes>attacker_character.weapon.range:
 		return 'distance too great'
 	damage_min=8.0
@@ -128,7 +125,7 @@ class Alternative_attack(Special_attack):
 
 def begin_fight(foe,main_character):
 	if foe.detection_of_foe(main_character)=="detected":
-		distance_main_character=foe.distance_to_foe(main_character)
+		distance_main_character=foe.distance_to_instance(main_character)
 		non_attacked=True
 		foe_skills=foe.show_skills()
 		response=""
@@ -166,6 +163,8 @@ def begin_fight(foe,main_character):
 def keep_fighting(foe,main_character):
 	inventory=foe.show_inventory()
 	no_action=True
+	for consumed_food in foe.consumed_inventory:
+		consumed_food.end_effect(foe)
 	response=""
 	while no_action:
 		if foe.life_points<0.25*foe.max_life_points:
@@ -177,10 +176,11 @@ def keep_fighting(foe,main_character):
 					return response
 		if foe.life_points<0.5*foe.max_life_points:
 			for food in inventory:
-				if food in objects.foods:
-					food.eat(foe)
-					response="{} eats {}, restore {} health points and {}".format(foe,food,food.life_points_gained,food.side_effect)
-					return response
+				for element in objects.foods:
+					if food.name==element:
+						food.eat(foe)
+						response="{} eats {}, restore {} health points and {}".format(foe,food,food.life_points_gained,food.side_effect)
+						return response
 		if foe.mana_points<0.2*foe.max_mana_points:
 			for potion in inventory:
 				name_of_potion=potion.name.split()
@@ -197,7 +197,7 @@ def keep_fighting(foe,main_character):
 					return response
 		choice_of_attack=random.randint(1,12)
 		foe_skills=foe.show_skills()
-		distance_main_character=foe.distance_to_foe(main_character)
+		distance_main_character=foe.distance_to_instance(main_character)
 		if foe.life_points<0.25*foe.max_life_points:
 			if foe_skills[1]!=[]:
 				for increment in range(len(foe_skills[1])-1,0,-1):

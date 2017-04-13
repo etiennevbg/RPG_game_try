@@ -116,9 +116,7 @@ class Food(Potion):
 		self.side_effect=side_effect
 		self.duration_of_effect=-1
 	def eat(self,character):
-		if self.side_effect==None:
-			pass
-		else:
+		if self.side_effect!=None:
 			effect=self.side_effect.split()
 			#  the type of side_effect will be a string written
 			#  this way : "gain 1 strength for 5 rounds" or
@@ -148,12 +146,11 @@ class Food(Potion):
 			if effect[2]=='max_stamina_points':
 				character.max_stamina_points+=value
 				character.stamina_points+=value
+		character.add_in_consumed_inventory(self)
 		self.use(character)
 	def end_effect(self,character):
 		self.duration_of_effect-=1
-		if self.duration_of_effect>0:
-			return False
-		elif self.duration_of_effect==0:
+		if self.duration_of_effect==0:
 			effect=self.side_effect.split()
 			value=-int(effect[1])
 			if effect[0]=='lose':
@@ -179,9 +176,8 @@ class Food(Potion):
 			if effect[2]=='max_stamina_points':
 				character.max_stamina_points+=value
 				character.stamina_points+=value
-			return True
-		else:
-			return True
+			character.drop_consumed(self)
+			print("{} do not affect {} anymore".format(self,character))
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""armours={'category type':[

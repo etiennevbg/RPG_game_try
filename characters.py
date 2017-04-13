@@ -36,6 +36,7 @@ class Equipment():
 		self.weight_max=weight_max
 		self.weight=0
 		self.inventory=[]
+		self.consumed_inventory=[]
 		self.gold=0
 	def add_in_inventory(self,Object):
 		new_weight=self.weight+Object.weight
@@ -44,11 +45,17 @@ class Equipment():
 		else:
 			self.weight=new_weight
 			self.inventory.append(Object)
+	def add_in_consumed_inventory(self,food):
+		self.consumed_inventory.append(food)
 	def drop(self,Object):
 		for obj in self.inventory:
 			if obj.name==Object.name:
 				self.weight-=Object.weight
 				self.inventory.remove(obj)
+	def drop_consumed(self,Object):
+		for obj in self.consumed_inventory:
+			if obj.name==Object.name:
+				self.consumed_inventory.remove(obj)
 	def show_inventory(self):
 		return(self.inventory)
 	def gain_gold(self, value):
@@ -97,6 +104,8 @@ class Position():
 	def set_to_position(self,x,y):
 		self.x=x
 		self.y=y
+	def distance_to_instance(self,other_instance):
+		return sqrt((self.x-other_instance.x)**2+(self.y-other_instance.y)**2)
 
 class Character(Ability,Equipment,Skills,Position):
 	def __init__ (self,name,life_points,max_life_points,mana_points,max_mana_points,
@@ -163,10 +172,8 @@ class Foe(Character):
 			self.drop(self.inventory[j])
 			iterable+=1
 		return (self.gold,loots)
-	def distance_to_foe(self,main_character):
-		return sqrt((self.x-main_character.x)**2+(self.y-main_character.y)**2)
 	def detection_of_foe(self,main_character):
-		distance_foe=self.distance_to_foe(main_character)
+		distance_foe=self.distance_to_instance(main_character)
 		if distance_foe<30:
 			"""detection_chance=[[proba1,distance1],[proba2,distance2]...]"""
 			detection_chance=[[0.9,5],[0.5,10],[0.25,15],[0.1,20],[0.01,25]]
