@@ -17,17 +17,21 @@ def plain_attack(attacker_character,defender_character):
 	distance_foes=attacker_character.distance_to_instance(defender_character)
 	if distance_foes>attacker_character.weapon.range:
 		return 'distance too great'
-	damage_min=8.0
-	damage_max=40.0
+	damage_min=12.0
+	damage_max=60.0
 	damage_weapon_min=4.0
 	damage_weapon_max=35.0
 	strength_min=1.0
 	strength_max=9.0
-	protection_min=5
-	protection_max=80
+	protection_min=5.0
+	protection_max=80.0
 	factor_strength=1/strength_min*(damage_min/damage_weapon_min+(damage_max/damage_weapon_max-damage_min*strength_max/(damage_weapon_min*strength_min))/(strength_max/strength_min-protection_min/protection_max))
 	factor_protection=(damage_max/damage_weapon_max-damage_min*strength_max/(damage_weapon_min*strength_min))/(protection_max*strength_max/strength_min-protection_min)
-	damaged_dealt=int(random.randint(damage[0],damage[1])*((factor_strength*(attacker_character.strength))-factor_protection*defender_character.body_protection))
+	if attacker_character.weapon.damage_range<2:
+		damaged_dealt=int(random.randint(damage[0],damage[1])*((factor_strength*(attacker_character.strength))-factor_protection*defender_character.body_protection))
+	else:
+		#  with distance weapons, agility is needed
+		damaged_dealt=int(random.randint(damage[0],damage[1])*((factor_strength*(0.5*attacker_character.strength+0.5*attacker_character.agility))-factor_protection*defender_character.body_protection))
 	if damaged_dealt<1:
 		damaged_dealt=1
 	chance_to_touch=1-0.01*defender_character.agility+0.005*attacker_character.agility
@@ -60,7 +64,7 @@ class Spell(Special_attack):
 			return "intelligence too low"
 		else:
 			attacker_character.lose_mana(self.mana_required)
-			damage_min=15.0
+			damage_min=20.0
 			damage_max=120.0
 			damage_spell_min=6.0
 			damage_spell_max=40.0

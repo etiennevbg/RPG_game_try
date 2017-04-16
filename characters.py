@@ -106,6 +106,9 @@ class Position():
 		self.y=y
 	def distance_to_instance(self,other_instance):
 		return sqrt((self.x-other_instance.x)**2+(self.y-other_instance.y)**2)
+	def collision(self,other_instance):
+		if self.distance_to_instance(other_instance)<0.5:
+			return True
 
 class Character(Ability,Equipment,Skills,Position):
 	def __init__ (self,name,life_points,max_life_points,mana_points,max_mana_points,

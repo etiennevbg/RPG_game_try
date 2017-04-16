@@ -127,16 +127,28 @@ class Food(Potion):
 				value=value*(-1)
 			if effect[2]=='strength':
 				character.change_strength(value)
+				if character.strength<0:
+					character.strength=0
 			if effect[2]=='agility':
 				character.change_agility(value)
+				if character.agility<0:
+					character.agility=0
 			if effect[2]=='endurance':
 				character.change_endurance(value)
+				if character.endurance<0:
+					character.endurance=0
 			if effect[2]=='intelligence':
 				character.change_intelligence(value)
+				if character.intelligence<0:
+					character.intelligence=0
 			if effect[2]=='will':
 				character.change_will(value)
+				if character.will<0:
+					character.will=0
 			if effect[2]=='luck':
 				character.change_luck(value)
+				if character.luck<0:
+					character.luck=0
 			if effect[2]=='max_life_points':
 				character.max_life_points+=value
 				character.life_points+=value
