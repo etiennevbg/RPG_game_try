@@ -110,7 +110,26 @@ class Position():
 		if self.distance_to_instance(other_instance)<0.5:
 			return True
 
-class Character(Ability,Equipment,Skills,Position):
+class Quest_book():
+	def __init__(self):
+		self.quest_book=[]
+	def add_quest(self,quest):
+		self.quest_book.append(quest)
+	def realize_condition_quest(self,quest,condition):
+		if quest in self.quest_book:
+			i=self.quest_book.index(quest)
+			if condition in quest.quest_conditions:
+				j=quest.quest_conditions.index(condition)
+				self.quest_book[i].quest_conditions[j]=True
+	def accomplished_quest(self,quest):
+		if quest in self.quest_book:
+			for condition in quest.quest_conditions:
+				if condition!=True:
+					return 'quest unfinished'
+			quest.quest_accomplished=True
+			return quest.quest_reward
+
+class Character(Ability,Equipment,Skills,Position,Quest_book):
 	def __init__ (self,name,life_points,max_life_points,mana_points,max_mana_points,
 					stamina_points,max_stamina_points,experience,level,style):
 		self.name=name
@@ -129,6 +148,7 @@ class Character(Ability,Equipment,Skills,Position):
 		Equipment.__init__(self)
 		Skills.__init__(self)
 		Position.__init__(self)
+		Quest_book.__init__(self)
 	def __repr__(self):
 		return self.name
 
@@ -191,6 +211,19 @@ class Foe(Character):
 			if detected>probability_of_non_detection:
 				return "detected"
 
+class Quest():
+	def __init__(self,name,description,conditions,npc,reward):
+		self.quest_name=name
+		self.quest_description=description
+		self.quest_conditions=conditions
+		#  reward as (experience,gold,equipment=None)
+		self.quest_reward=reward
+		self.quest_accomplished=False
+	def __repr__(self):
+		return self.quest_name
+	def give_quest(self,character):
+		character.add_quest(self)
+#class NPC(Quest):
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""foes={name:level_range,abilitity_ranges}"""

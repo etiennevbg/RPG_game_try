@@ -1,11 +1,12 @@
 import initializes
-import fights
+import characters
+"""import fights
 import objects
 import time
 
-a=float(time.clock())
+a=float(time.clock())"""
 ogre1=initializes.create_foe("ogre low level")
-b=float(time.clock())
+"""b=float(time.clock())
 spider=initializes.create_foe("spider medium level")
 
 print(ogre1.show_skills())
@@ -50,3 +51,18 @@ while surprise:
 		break
 print(ogre1.die(),spider.die())
 
+"""
+
+event1=characters.Quest('gobelins attack',
+					'5 gobelins attacked the hunters camp and stole their axes, find them and bring them back',
+					['5 gobelins to kill','get 3 axes','bring the axes back'],
+					'Jean Mich', (150,50,initializes.create_weapon('light','mele')))
+
+event1.give_quest(ogre1)
+print(ogre1.accomplished_quest(event1))
+ogre1.realize_condition_quest(event1,'5 gobelins to kill')
+print(ogre1.accomplished_quest(event1))
+ogre1.realize_condition_quest(event1,'get 3 axes')
+print(ogre1.accomplished_quest(event1))
+ogre1.realize_condition_quest(event1,'bring the axes back')
+print(ogre1.accomplished_quest(event1))
