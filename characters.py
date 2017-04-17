@@ -212,7 +212,7 @@ class Foe(Character):
 				return "detected"
 
 class Quest():
-	def __init__(self,name,description,conditions,npc,reward):
+	def __init__(self,name,description,conditions,reward):
 		self.quest_name=name
 		self.quest_description=description
 		self.quest_conditions=conditions
@@ -223,7 +223,28 @@ class Quest():
 		return self.quest_name
 	def give_quest(self,character):
 		character.add_quest(self)
-#class NPC(Quest):
+
+class NPC(Quest):
+	def __init__(self,name,reply,style,quest_name=None,quest_description=None,
+					quest_conditions=None, quest_reward=None):
+		self.name=name
+		self.reply=reply
+		self.style=style
+		Quest.__init__(quest_name,quest_description,quest_conditions,quest_reward)
+	def talk(self):
+		return(reply)
+
+class Merchant(NPC,Equipment):
+	def init(self,name,reply,style,quest_name=None,quest_description=None,
+					quest_conditions=None, quest_reward=None):
+		NPC.__init__(self,name,reply,style,quest_name,quest_description,
+					quest_conditions, quest_reward)
+		Equipment.__init__ (self,1000)
+		self.gain_gold(random.randint(500,1000))
+	def exchange(self,character):
+		return (self.gold,self.inventory,character.gold,character.inventory)
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""foes={name:level_range,abilitity_ranges}"""
