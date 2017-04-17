@@ -224,23 +224,30 @@ class Quest():
 	def give_quest(self,character):
 		character.add_quest(self)
 
-class NPC(Quest):
+class NPC(Quest,Position):
 	def __init__(self,name,reply,style,quest_name=None,quest_description=None,
 					quest_conditions=None, quest_reward=None):
 		self.name=name
 		self.reply=reply
 		self.style=style
-		Quest.__init__(quest_name,quest_description,quest_conditions,quest_reward)
+		Quest.__init__(self,quest_name,quest_description,quest_conditions,quest_reward)
+		Position.__init__(self)
 	def talk(self):
-		return(reply)
+		return(self.reply)
+	def new_quest(self,quest):
+		self.quest_name=quest.quest_name
+		self.quest_description=quest.quest_description
+		self.quest_conditions=quest.quest_conditions
+		self.quest_reward=quest.quest_reward
+		self.quest_accomplished=False
 
 class Merchant(NPC,Equipment):
-	def init(self,name,reply,style,quest_name=None,quest_description=None,
+	def __init__(self,name,reply,style,quest_name=None,quest_description=None,
 					quest_conditions=None, quest_reward=None):
 		NPC.__init__(self,name,reply,style,quest_name,quest_description,
 					quest_conditions, quest_reward)
-		Equipment.__init__ (self,1000)
-		self.gain_gold(random.randint(500,1000))
+		Equipment.__init__(self,1000)
+		self.gold=random.randint(700,1000)
 	def exchange(self,character):
 		return (self.gold,self.inventory,character.gold,character.inventory)
 

@@ -103,6 +103,7 @@ def create_foe(foe_name,level=None):
 	foe.add_in_inventory(weapon)
 	weapon.equip_weapon(foe)
 	#  now let's put loots in its inventory
+	foe.gold=random.randint(0,15)
 	number_of_objects=random.randint(0,4)
 	for i in range(number_of_objects):
 		choice_of_object=random.randint(0,9)
